@@ -1,0 +1,116 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Overview of KMeans Algorithm {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> A brief Overview of KMeans Algorithm</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Why unsupervised Learning is Needed</li>
+                    <li> A brief Overview of KMeans algorithm</li>
+                </ul>
+            </div>    
+        </div>
+
+        <div>
+            <h5 class="text-dark my-3"> Why do we need Unsupervised learning ?</h5>
+            <p>
+                Regression and Classification algorithms require labeled data. \( X \) variables are called independent variables while
+                the \( y \) variable is called dependent variable or label. Consider the house price prediction problem; number of
+                rooms, area of house, locality etc are possible independent variables while house price is the dependent variable. <br>
+                In the case of a regression problem, the dependent variable is of continuous type. It can take any value. House price
+                can take any value and hence it is a regression problem. <br>
+                Classification problems have discrete dependent variables. Simplest case would be the binary class problem. In this case
+                the dependent variable will have only two classes \( \{ 0,1 \} \). An example can be email classification where class 1 may denote
+                email is spam and class 0 may denote email is not spam. Dependent variable can have more than two classes in it. We call
+                it a multiclass problem. An example could be classification of customers into premium, good and bad classes. <br>
+                <br>
+                Regression and Classification problems are called supervised learning because of the presence of the dependent variable.
+                 Dependent variable supervises the algorithm to learn patterns in the data. Dependent variables are ground truth and most of the 
+                 time manual labeling is involved. In case of email classification, a human labeler will read the email and mark them as spam or 
+                 not spam. And final labeled data would be used to train Machine Learning Model. Data collection is an expensive process and 
+                 becomes bottleneck in supervised learning.
+                 <br>
+                 <br>
+                 If we do not have the dependent variable in our dataset can we do something  with independent variables and identify 
+                 patterns in the data. Yes, we can adopt unsupervised learning algorithms and classify data into different clusters.   
+                 <br>
+                 K-means, Gaussian Mixture Models (GMM), Hierarchical clustering etc are some of the examples of unsupervised learning 
+                 algorithms. In this Section we will discuss a brief overview of the K-Means algorithm.  
+                 <br>
+
+            </p>
+        </div>
+        <div>
+            <p>
+                <h5 class="text-dark my-3"> Brief Overview of K-Means Clustering</h5>
+                Consider you are given a dataset with features such as Income, Spending capacity, age, gender  etc and you are asked 
+                to classify this data set into multiple clusters.
+                We can use the K-Means algorithm to solve this problem. The K-Means algorithm is one the very simplest yet powerful
+                algorithm. First we need to specify how many clusters we would want in our dataset and then the algorithm will 
+                assign a cluster id to each of the data points. There are three major steps involved in the algorithm 
+                <br>
+                <br>
+                <ol>
+                    <li>It randomly selects the K cluster centroid. K is specified by the user which indicates how many clusters we want.</li>
+                    <li>
+                        It calculates the euclidean distance between the data point and each of the cluster centroid and then cluster 
+                        ids are assigned based on which cluster centroid is closest to the data point.
+                    </li>
+                    <li>
+                        Algorithm updates the cluster centroids which are the mean value of all the data points in a cluster. 
+                    </li>
+                </ol>
+
+                Algorithm keeps on updating cluster centroids and cluster ids until a stopping criteria is satisfied. 
+                We can run the  algorithm for a fixed \( n \) number of times or there are other stopping criteria as well, 
+                we will explore these details in the next section.
+
+            </p>
+            <p>
+                Let’s understand through an example. For the sake of simplicity we will look at the two features   
+                Income and spending capacity. ( visualization becomes easy)
+                <br>
+                Before feeding data to the K-means algorithm we first normalize the data. Below diagram shows the output of K-Means
+                algorithm. On the x axis we have normalized income and on the y axis we have normalized spend. K-Means algorithm has
+                identified three clusters. 
+                <ul>
+                    <li>Cluster 0 has high income and high spend individuals and we can say this cluster has the most
+                        premium segment.</li>
+                    <li>
+                        cluster 2 has high income and low spend individuals we can probably mark this as a good segment.
+                    </li>
+                    <li>
+                        Cluster 1 has low income and low spend individuals and this is probably not a very good segment of individuals.
+                    </li>
+                </ul>
+
+            </p>
+            {% autoescape off %}
+             {{kmeans_overview_plot}}
+            {% endautoescape %}
+            
+        </div>
+
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Data Normalization</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

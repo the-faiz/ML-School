@@ -1,0 +1,77 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Stacking Model {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Ensemble Model : Stacking </h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Details of Stacking Ensemble Model</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p>
+                Stacking is one of the simplest strategies one can adopt. In this approach we train different heterogeneous models
+                on the same training dataset and
+                each of the weak learners has low bias and high variance problems. By combining all the weak learners, stacking
+                essentially solves the high variance problem. Core Idea behind this approach is that different weak learners focusses on
+                different parts of the training data and capture different patterns. <br>
+                Major steps involved in the stacking algorithm are highlighted below
+                <ul>
+                    <li>
+                        Train multiple models using the same training data. <br>
+                        All the models in this approach are heterogeneous. Generally we
+                        select 4-8 different machine learning algorithms. These models can be KNN, Logistic Regression, Decision tree, SVM etc.
+                        Similarly for regression problems we can select appropriate models. 
+
+                        {% load static %}
+                        <div class="my-4">
+                            <img src={% static 'ensemble_model/stacking_step1.png' %}
+                                class="img-fluid rounded float-centre" alt="house_price_for_high_level">
+                        </div>
+
+                    </li>
+                    <li>
+                        Take all the trained models and make predictions on the dataset. Predictions from each of the models can be treated as a
+                        new feature.
+                        {% load static %}
+                        <div class="my-4">
+                            <img src={% static 'ensemble_model/stacking_step2.png' %}
+                                class="img-fluid rounded float-centre" alt="house_price_for_high_level">
+                        </div>
+
+                    </li>
+                    <li>
+                        Newly created features can be used to train a new model which will make final predictions.
+                        {% load static %}
+                        <div class="my-4">
+                            <img src={% static 'ensemble_model/stacking_step3.png' %}
+                                class="img-fluid rounded float-centre" alt="house_price_for_high_level">
+                        </div>
+                    </li>
+                </ul>
+            </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

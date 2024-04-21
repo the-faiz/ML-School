@@ -1,0 +1,36 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Maximum likelihood Estimator {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Maximum likelihood Estimate</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> What is MLE</li>
+                    <li> An example to understand how MLE works</li>
+                    <li> How MLE is used to derive the cost function of logistic Regression Model</li>
+                </ul>
+            </div>
+        </div>
+  
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Sigmoid function</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

@@ -1,0 +1,122 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Normal Distribution {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Gaussian/Normal Distribution Overview</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li>Gaussian/Normal Distribution and its Parameters</li>
+                    <li> Examples to understand effect of parameters on shape and orientation of distributions</li>
+                    <li> How Shape of clusters is determined in Gaussian mixture models (GMM) </li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <h4>1D normal Distribution</h4>
+            A random variable is said to be normally distributed if pdf of the variables follows below equation
+            <span style="font-family: MathJax_Main;"> 
+            \begin{align}
+            p(x)=\frac{1}{\sqrt 2πσ^2}*e^-\frac{(x-μ)^2}{2σ^2}
+            \end{align}
+            </span>
+            
+            \( \mu= \) mean of the distribution <br>
+            \( \sigma = \) standard deviation of the distribution <br>
+            \( \mu , \sigma \) are called parameters of the distribution and they control center and spread of the distribution.
+            <ul>
+                <li>
+                    <p>
+                        <h5>Effect of change of mean on the distribution.</h5>
+                        Center of the distribution is controlled by mean and if we change mean value by keeping the std constant distribution
+                        simply moves left or right. Below diagram shows the effect of changing mean on the distribution.
+        
+                    </p>
+                    {% autoescape off %}
+                     {{mean_effect_1d}}
+                    {% endautoescape %}
+                </li>
+                <li>
+                    <p>
+                        <h5>Effect of change of Standard deviation on the distribution </h5>
+                        \( \sigma \) controls the width of the distribution and below diagram explains how width of the distribution increases
+                        with increase in the \( \sigma \) value.
+                        {% autoescape off %}
+                            {{std_effect_1d}}
+                        {% endautoescape %}
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h4>2D Normal Distribution</h4>
+            <p>
+                Pdf of 2D normal distribution is given by following equation
+                <span style="font-family: MathJax_Main;"> 
+                \begin{align}
+                p(x)=\frac{1}{2\pi * | \Sigma |^\frac{1}{2}}*exp\{\frac{1}{2}*(x-\mu)^T\Sigma^{-1}(x-\mu)\}
+                \end{align}
+                </span>
+                There are two parameters in this equation <br>
+                <ul>
+                    <li>
+                        \( \mu \) which is called the mean vector and determines the center of the distribution.
+                    </li>
+                    <li>
+                        \( \Sigma \) which is called covariance matrix and controls the shape and width of the distribution
+                    </li>
+                </ul>
+               
+                
+                
+            </p>
+           <p>
+            Below diagram shows the different shapes of distribution obtained by changing the values of the covariance matrix.
+           </p>
+            {% autoescape off %}
+                {{ 2d_normal_dist}}
+            {% endautoescape %}    
+        </div>
+        <div>
+            <h4> How Gaussian Mixture Models learns the shape of clusters </h4>
+            As we have seen above, the shape and orientation of normal distribution is controlled by the covariance matrix. GMM
+            tries to fit Normal distributions to the clusters and there are two parameters required to fit normal distributions to
+            each of the clusters. <br>
+            <ul>
+                <li>
+                    \( \mu \) vector for each of the clusters.  GMM learns these vectors during training. 
+                    These vectors  define the centers of each of the clusters.
+                </li>
+                <li>
+                    \( \Sigma \), covariance matrix for each of the clusters. This is also learned during model training. Depending upon
+                    learned covariance matrix shapes and orientation of the clusters would be different.
+
+                </li>
+            </ul>
+           
+            
+        </div>
+        
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

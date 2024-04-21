@@ -1,0 +1,85 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Hyperparameter Tuning in Random Forest {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Important Hyperparameters in Random Forest Algorithm</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li>Brief Overview of hyper-parameters in Random Forest </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h4>Hyperparameter Tuning In Random Forest</h4>
+            <p>
+                In this section we will discuss some of the important hyperparameters which need to be tuned for best performance of the
+                random forest model. Below are some of the important hyperparameters involved in the random forest algorithm
+                <ul>
+                    <li>
+                        <h5>
+                            n_estimators
+                        </h5>
+                        <p>
+                            This hyperparameter indicates the number of decision trees in the random forest. Larger the value is better for the
+                            model but after a certain value you might not get significant improvement in the performance and higher number of trees
+                            lead to increase in the training time of the algorithm. Therefore you need to tune this hyperparameter very carefully.
+
+                        </p>
+                    </li>
+                    <li>
+                        <h5>
+                            max_feature
+                        </h5>
+                        <p>
+                            This indicates the number of features which will be used to find the best split feature at each node(look at this
+                            discussion to understand more about this). If there are N features then sqrt(N) is a good choice for this parameter but
+                            we need to tune it.
+                        </p>
+                    </li>
+                    <li>
+                        <h5>
+                            max_depth
+                        </h5>
+                        <p>
+                            This indicates the maximum depth of the decision tree models. In the Random Forest algorithm we generally have high
+                            depth ( full grown tree). You can set this parameter to some high value ( but finding this high value requires
+                            hyperparameter tuning). <br>
+                             You can allow trees to grow and specify other stopping criteria such as <b>min_samples_split=2 or 5</b>
+                            which indicate how many data points a node should have in order to consider it for further split. Again
+                            min_samples_split is a hyperparameter and you need to tune it.
+                        </p>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                Scikit-learn <a href="https://scikit-learn.org/stable/modules/ensemble.html#random-forest-parameters">documentation  </a>
+                has a brief discussion on important hyperparameters. Readers are advised to take a look at this. <br>
+                For a full list of hyperparameters in the Random Forest algorithm in python look at this '
+                <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html"> documentation.</a>
+            
+            </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

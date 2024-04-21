@@ -1,0 +1,72 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Sigmoid Function Overview {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Details of Sigmoid Activation Function</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> What is sigmoid function</li>
+                    <li> Need of the sigmoid function</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            Logistic Regression uses sigmoid activation function. This function may take any number as input and map it to a value
+            between \( [0,1] \).
+            Below is the equation of the sigmoid function
+            \begin{align}
+            \text{sigmoid}(x)=\frac{1}{1+e^{-x}}
+            \end{align}
+            Below plot shows the variation of sigmoid function on a number line. At \(x=0\) this function takes a value of 0.5, for
+            larger values of sigmoid it is very close to 1 while for smaller values of x sigmoid tends to 0.
+
+        </div>
+        
+        
+        {% autoescape off %}
+        {{sigmoid_plot}}
+        {% endautoescape %}
+
+        <div>
+            <h5 class="text-secondary my-3"> Why Sigmoid is used in logistic regression</h5>
+            <p>
+                Dependent variable in the classification problem has two values 0,1. Sigmoid function takes any input argument and maps
+                it to a value between \( [0,1] \). We can predict the class of data points using this output of the sigmoid function. We
+                can predict class =1 when sigmoid value is greater than certain threshold otherwise class=0. One of the choices of
+                threshold can be 0.5. If the sigmoid value is greater than or equal to 0.5 then predicted class = 1 otherwise class =0.
+                
+                \begin{align}
+                class = \left\{
+                \begin{array}{cl}
+                1 & if \ \text{sigmoid}(x) >= 0.5 \\
+                0 & if \ \text{sigmoid} (x) < 0.5 \end{array} \right. 
+                \end{align} 
+                We can treat the threshold as a tunable hyperparameter.We can set any value for the threshold.  
+                For example We can say that we will set class=1 only when the sigmoid score is greater than 0.8 otherwise class =0.
+                           
+            </p>
+        </div>
+    
+  
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Activation functions</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

@@ -1,0 +1,81 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Machine Learning Interview Questions {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Interview Question from KMeans Algorithm</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Interview Question related to KMeans </li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <ul>
+                <li>
+                    Time and space complexity of KMeans
+                </li>
+                <li>
+                    Can you briefly explain KMeans Algorithm?
+                </li>
+                <li>
+                    Why is cluster initialization critical in KMeans?
+                </li>
+                <li>
+                    Can you briefly explain the stopping criteria of KMeans?
+                </li>
+                <li>
+                    How do we select the number of clusters in KMeans?
+                </li>
+                <li>
+                    Can you talk about the evaluation metrics for unsupervised learning?
+                </li>
+                <li>
+                    How outliers may affect the KMeans algorithm? What can be done to alleviate this problem?
+                </li>
+                <li>
+                    If your data set has lots of outliers, which clustering algorithm would you use? 
+                    <p>
+                        Dbscan probably.
+                    </p>
+                </li>
+                <li>
+                    Why is feature normalization important for KMeans?
+
+                </li>
+                <li>
+                    What preprocessing steps would you use before you feed data to the K Means Algorithm?
+                    <p>
+                        1) Feature Normalization, 2) PCA if high dimensional data
+
+                    </p>
+
+                </li>
+                <li>
+                    Drawbacks and advantages of K Means algorithm. 
+                </li>
+            </ul>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

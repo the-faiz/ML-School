@@ -1,0 +1,250 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Gradient Descent Coding {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Write Code to find point of minimum for the function \( y = (z-2)^2 \)</h2>
+    <article>
+
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Code Gradient Descent from scratch in python</li>
+                    <li>Discuss what will happend if we do not select right learning rate</li>
+                    <li> We will discuss what will happend if learning rate is too high or too low</li>
+
+                </ul>
+
+
+            </div>
+
+        </div>
+
+        <p> We have discussed details of steps involved in gradient descent in the previous section[link]. In this
+            Section we will first write a working code then we will look at some example cases to understand the
+            importance of learning rate in the gradient descent.
+        </p>
+        <h4 class="text-secondary my-3"> Code </h4>
+        <p>
+            <strong>get_objetcive_fun_value :</strong> This function simply gives the objective function value. In our
+            case we are trying
+            to minimise
+            \begin{align}
+            y = (z-2)^2
+            \end{align}
+            <br>
+            <strong>calculate_grad :</strong> This function calculates the gradient of cost function w.r.t parameter \(
+            z \). This is
+            simply a partial derivative of the cost function w.r.t parameters.
+            \begin{align}
+            \frac{\partial y}{\partial z} = 2*(z-2)
+            \end{align}
+
+        </p>
+        <pre class="bg-dark text-warning">
+                <code class="language-python">
+    def get_objective_fun_value(z):
+        """
+        This function give value of objective function (z-2)^2
+        
+        params : z
+        """
+        return (z-2)**2
+
+    def calculate_grad(z):
+        """ 
+        This function calculates the gradient of objective function
+
+        params : z, point at which you want to calculate gradient
+        """
+        return 2*(z-2)
+                </code>
+
+        </pre>
+        <p>
+            <strong>gradient_descent :</strong> This function implements the gradient descent algorithm. It takes the
+            initial value of z
+            as one of the input parameters and then keeps on updating it for a fixed number of times. You remember we
+            discussed two stopping criterion for gradient descent. <a
+                href="../../../gradient_descent_basics/gradient_descent_primer.html#StoppingCriteria"
+                style="color: gray">[Here]</a>
+
+        </p>
+        <pre class="bg-dark text-warning">
+            <code>
+    def gradient_descent(z,n,lr):
+        """
+        This function implements the gradient descent algorithm
+
+        Input params : 
+            z : this is the initial value 
+            n : number of times loop runs
+            lr: learning rate
+        """
+        for i in range(n):
+            grad=calculate_grad(z) 
+            val=get_objective_fun_value(z) 
+            print("step={0}, z={1}, objective fun ={2}".format(i,round(z,3),round(val,3)))
+            z=z-lr*grad
+            </code>
+        </pre>
+        <div>
+            <p>
+            <h4 id="LearningRate">Learning Rate </h4>
+            Learning rate is a very important hyperparameter in machine learning. It controls the step size of gradient
+            descent update. Higher learning rate means bigger step size while lower learning rate means smaller step
+            size.
+            If we do not select the learning rate properly then gradient descent may fail to converge. Let’s understand
+            this through an example. <br>
+            <br>
+            We have run gradient descent algorithms for three different learning rates. We have kept initial point same
+            for all runs, we have looked at how z value and cost function values changes as gradient descent progresses
+            <br>
+            <br>
+
+            <strong>1. Lr=1 :</strong> Left table shows these results. There is no learning happening here. Initially z
+            was at 5 and then z became -1. After that it keeps on oscillating between these two values only. Cost
+            function value does not change which means there is no progress gradient descent is making. Here we have
+            chosen a relatively high learning rate which means in every update gradient descent will take a bigger step,
+            with bigger update step gradient descent may fail to converge.
+            <br>
+            <br>
+            <strong>2. Lr=.4 :</strong>Middle table shows the results of this simulation. Here gradient descent starts
+            from z = 5 and
+            slowly progresses towards minima point. Gradient descent took 6 steps to reach z=2 which is the point of
+            minima. This seems a good choice of learning rate.
+            <br>
+            <br>
+            <strong>3. Lr=.1 : </strong>Right table shows the results of this simulation. Gradient descent took 22 steps
+            to reach the
+            minima. Here Gradient descent converged to minima point but it took a little longer time. It seems there are
+            only extra 16 steps which gradient descent took. But think of the case when you have too many model
+            parameters to optimise and have bigger training data size. In that case training time will drastically
+            increase if the learning rate is too low.
+
+
+
+            </p>
+
+        </div>
+        <!--three table begins-->
+        <div class="container" id="ThreeCards">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="border-success bg-secondary text-dark">
+                        \( z = 5, \ lr = 1 \)
+
+                        <p>
+                        <pre class="text-white">
+    Step | z   |cost_fun
+    0    | 5  | 9
+    1    |-1  | 9
+    2    | 5  | 9
+    3    |-1  | 9
+    4    | 5  | 9
+    5    |-1  | 9
+    6    | 5  | 9
+    7    |-1  | 9
+    8    | 5  | 9
+    9    |-1  | 9
+                               
+                            </pre>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="border-success bg-secondary text-dark">
+
+                        \( z = 5, \ lr = .4 \)
+
+                        <p>
+                        <pre class="text-white">
+    Step | z    | Cost_fun
+    0    | 5    | 9
+    1    | 2.6  | 0.36
+    2    | 2.12 | 0.014
+    3    | 2.024| 0.001
+    4    | 2.005| 0.0
+    5    | 2.001| 0.0
+    6    | 2.0  | 0.0
+    7    | 2.0  | 0.0
+    8    | 2.0  | 0.0
+    9    | 2.0  | 0.0
+
+                           </pre>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="border-success bg-secondary text-dark">
+
+                        \( z = 5, \ lr = .1 \)
+
+                        <p>
+                        <pre class="text-white">
+ Step | z      | cost_fun
+ 0    | 5      | 9
+ 1    | 4.4    | 5.76
+ 2    | 3.92   | 3.686
+ 3    | 3.536  | 2.359
+ 4    | 3.229  | 1.51
+ 5    | 2.983  | 0.966
+ 6    | 2.786  | 0.618
+ 7    | 2.629  | 0.396
+ 8    | 2.503  | 0.253
+ 9    | 2.403  | 0.162
+ 10   | 2.322  | 0.104
+ 11   | 2.258  | 0.066
+ 12   | 2.206  | 0.043
+ 13   | 2.165  | 0.027
+ 14   | 2.132  | 0.017
+ 15   | 2.106  | 0.011
+ 16   | 2.084  | 0.007
+ 17   | 2.068  | 0.005
+ 18   | 2.054  | 0.003
+ 19   | 2.043  | 0.002
+ 20   | 2.035  | 0.001
+ 21   | 2.028  | 0.001
+ 22   | 2.022  | 0.0
+ 23   | 2.018  | 0.0
+ 24   | 2.014  | 0.0
+                            </pre>
+                        </p>
+                    </div>
+                </div>
+                <!--this is 3rd section div-->
+
+            </div>
+            <!--this is row div-->
+
+        </div>
+        <!--three table begins-->
+
+        <h4 class="text-secondary"> Summary of this lesson</h4>
+        <p>
+            We have coded gradient descent for a very simple objective function. We have looked at if the learning rate
+            is too high then gradient descent may fail to converge, similarly if the learning rate is too low then it
+            may increase training time of the algorithm. Therefore we need to tune the learning rate properly to avoid
+            both situations.
+
+        </p>
+    </article>
+
+</div> {% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

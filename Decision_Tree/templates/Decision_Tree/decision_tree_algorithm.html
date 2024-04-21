@@ -1,0 +1,159 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Decision Tree Algorithm {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Decision Tree Algorithm</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Complete Understanding of Decision Tree Algorithm </li>
+
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p>
+                Decision tree is based on a recursive partitioning algorithm and it's greedy in Nature. At each step it selects the best
+                split point and best variable. It keeps on repeating the splitting until a stopping criteria is met. <br>
+                <b>Following are the main steps involved in the algorithm </b>
+            
+                <ul>
+                    <li>
+                        For each of the variable calculate best split
+                    </li>
+                    <li>
+                        Out of all the variable select the best variable with best split
+                    </li>
+                    <li>
+                        Partition data into new partitions.
+                    </li>
+                    <li>
+                        For every newly created partition repeat step 1,2 and 3 until a stopping criteria is satisfied.
+                    </li>
+                </ul>
+            </p>
+            <p>
+                <h4>
+                    Stopping Criteria in Decision Tree
+                </h4>
+                <ul>
+                    <li>
+                        <h6>Insignificant information gain after partition</h6>
+                        One of the simplest stopping criteria for not splitting the newly created partition can be the situation when the
+                        partition contains majority of the data points from only one class then don’t split the partition. In this case if you
+                        try to split the partition further you will not see any significant information gain.
+                    </li>
+                    <br>
+                    
+                </ul>
+                There are other important hyperparameters which can be used as stopping criteria for the algorithm which are discussed
+                <a href="../../../Decision_Tree/hyperparameter_tuning.html"> here.</a>
+
+            </p>
+            <p>
+                Now we will see a step by step example on how to construct a decision tree from scratch.
+
+            </p>
+        </div>
+        <div>
+            <h4> Detailed steps involved in the decision tree</h4>
+            <ul>
+                <li>
+                    <h5> 
+                        Iteration 1
+                    </h5>
+                    <p>
+                        Below diagram shows how the best variable and best split is selected in the decision tree? <br>
+                        
+                        There are two variables in the plot, income and risk_score. Algorithm checks the best threshold for both income and
+                        risk_score. In the diagram below you can choose a variable which you want to check and then vary the threshold for
+                        split. Plot will output the selected variable, its threshold and information gain at that threshold. <br>
+                        
+                        Let’s check the income variable. You will find that at the threshold of 14.5 information gain is 0.1975, which is the
+                        best information gain which we can achieve by splitting the data using the income variable. <br>
+                        
+                        Now select the risk_score variable and vary the split threshold. You will see that at the threshold of 90 information
+                        gain is 0.1828, which is the maximum information gain which can be achieved by splitting data using the risk_score
+                        variable. <br>
+                        
+                        Income threshold 14.5 gives better information gain than risk_score threshold of 90. Therefore we will select income
+                        with a threshold of 14.5 as our first split. <br>
+        
+                    </p>
+                    <div> 
+                        {%load plotly_dash%}
+            
+                        {%plotly_app name="decision_tree_iteration_1" ratio=1.1%}
+                    </div>
+                </li>
+                <li>
+                    <h5>Iteration 2</h5>
+                    <p>
+                        Now we have got two regions. First with income less than 14.5 ( marked with red) and second income greater than 14.5 (
+                        marked with green). As a next step algorithm will try to partition each region further. <br>
+                        Let’s concentrate on the red region first. This region has already become homogeneous. It has 10 data points which
+                        belong to defult_class == Yes and only one data point which belongs to default class == No. If you try to split this
+                        region further you will not get any significant information gain and hence the algorithm will not split this region
+                        further. <br>
+                        You can also estimate the predicted value of the region by calculating the probability of default using all the data
+                        points in the region. <br>
+                        <br>
+                        \( \text{predicted probability of default}= 10/11 = 0.909 \)
+
+                    </p>
+                    <p>
+                        Now let’s look at the second region ( green region). This region still has a mix of default and non default class data
+                        points. There are 15 data points which belong to default == No and 6 data points which belong to default == yes classes.
+                        ALgorithm will try to split this region further into new partitions. It will take all the data points with income>= 14.5
+                        and repeat the same process which we have seen in iteration 1.
+
+                        We can split the green region using income and risk_score variables but the income variable is not going to be helpful
+                        here in terms of information gain. You can visually analyse this as well. Look at the below diagram. If you try to split
+                        this region you will get a maximum information gain of 0.0093 at income threshold of 22.2. <br>
+                        
+                        The risk_score variable is helpful in this region. Try changing the threshold split of the risk_score variable, you will
+                        see a maximum information gain of 0.1519 at a threshold of 95.
+                        Which means we can split this region at a threshold of 95.
+
+                    </p>
+                    <div> 
+                        {%load plotly_dash%}
+            
+                        {%plotly_app name="decision_tree_iteration_2" ratio=1.1%}
+                    </div>
+                </li>
+            </ul>
+            <p>
+                All the three regions (green, blue and red) have become homogeneous and you can also calculate the predicted values for
+                each of the regions. If you still try to partition any of the regions further you will not get any significant
+                information gain and hence the algorithm will stop. <br>
+                
+                As we have seen in the above discussion algorithm recursively tries to partition each region into subregions. This is
+                called the recursive partitioning algorithm.
+
+            </p>
+            
+        </div>
+       
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

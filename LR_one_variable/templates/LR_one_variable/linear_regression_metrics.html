@@ -1,0 +1,293 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Mathematics for Linear Regression with one variable {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Metrics for Regression Model</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> We will explore different metrics which can used in regression Model</li>
+                    <li> We will discuss pros and cons of each metric</li>
+                </ul>
+            </div>
+        </div>
+
+        <p>
+            So far we have discussed components of the linear regression model. We did not talk about how to assess the
+            quality of the trained model. In this section we will discuss some of the metrics which can be used to
+            assess the quality of a regression model. Metrics help us to differentiate between good and bad models.
+        </p>
+        <h4 class="text-secondary"> 1. Mean Squared Error (MSE)</h4> <br>
+        <p>
+            
+            It is the measure of how good a fitted line is. We can use following formula to calculate MSE
+            \begin{align}
+            MSE = \frac{\sum_{i=1}^N \ (y_i-\hat{y_i})^2}{N}
+            \end{align}
+
+            Numerator in the above formula is the sum of squared residuals and then we are dividing it by the total
+            number of observations. Which means MSE is essentially the average value of residual error. Below table shows an 
+            example to calculate MSE.
+
+        </p>
+        <div>
+            <table class="table table-bordered border-success table-striped text-center table-sm">
+                <caption> Table 1 MSE calcultion Steps
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">S.N.</th>
+                        <th scope="col">\( y_{true} \)</th>
+                        <th scope="col"> \( y_{predicted}\) </th>
+                        <th scope="col"> Residual <br> \((y_{true}-y_{predicted}) \) </th>
+                        <th scope="col"> Squared Residual <br> \((y_{true}-y_{predicted})^2 \) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>25</td>
+                        <td>23</td>
+                        <td>2</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>29</td>
+                        <td>29.5</td>
+                        <td> -0.5 </td>
+                        <td>0.25</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>40</td>
+                        <td>42</td>
+                        <td>-2</td>
+                        <td>4</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>32</td>
+                        <td>31</td>
+                        <td>1</td>
+                        <td>1</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>38</td>
+                        <td>39.5</td>
+                        <td>-1.5</td>
+                        <td>2.25</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4">Sum of squared residuals</th>
+    
+                        <td>11.5</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <p>
+            \begin{align}
+            MSE &= \frac{Sum \ of \ squared \ residuals}{Number \ of \ data \ points}  \\
+            MSE &= \frac{11.5}{5} \\
+            MSE &= 2.3
+            \end{align}
+
+        </p>
+        <p>
+            <strong>Problems with MSE</strong><br>
+            <strong>1. </strong>  MSE depends upon the scale of the variable. Higher the scale of the \( y \) variable would lead 
+            to higher MSE and vice versa. Below tables show two datasets. Left table has a lower scale of data while right table has 
+            higher scale of data <br>
+            MSE (using left table data) = 2.3 <br>
+            Right table has a higher scale <br> 
+            MSE (using right table data ) = 230
+            
+
+        </p>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <table class="table table-bordered border-success table-striped text-center table-sm">
+                        <caption> Table 2 data with lower scale of \( y \) variable
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">\( y_{true} \)</th>
+                                <th scope="col"> \( y_{predicted}\) </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>   
+                                <td>25</td>
+                                <td>23</td>
+                            </tr>
+                            <tr>
+                                <td>29</td>
+                                <td>29.5</td>
+                            </tr>
+                            <tr>                    
+                                <td>40</td>
+                                <td>42</td>
+                            </tr>
+                            <tr>          
+                                <td>32</td>
+                                <td>31</td>
+                            </tr>
+                            <tr>                           
+                                <td>38</td>
+                                <td>39.5</td>                       
+                            </tr>
+                        </tbody>
+        
+                    </table>
+
+                </div> 
+
+                <div class="col-sm-6">
+                    <table class="table table-bordered border-success table-striped text-center table-sm">
+                        <caption> Table 3 data with higher scale of \( y \) variable
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">\( y_{true} \)</th>
+                                <th scope="col"> \( y_{predicted}\) </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>   
+                                <td>250</td>
+                                <td>230</td>
+                            </tr>
+                            <tr>
+                                <td>290</td>
+                                <td>295</td>
+                            </tr>
+                            <tr>                    
+                                <td>400</td>
+                                <td>420</td>
+                            </tr>
+                            <tr>          
+                                <td>320</td>
+                                <td>310</td>
+                            </tr>
+                            <tr>                           
+                                <td>380</td>
+                                <td>395</td>                       
+                            </tr>
+                        </tbody>
+        
+                    </table>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <p>
+            <strong>2. </strong>  MSE has no upper bound. It can have any positive value.
+            There is no defined benchmark against which we can compare it. 
+            In one case an MSE of 100 units might indicate a good model while in another 
+            case an MSE of 100 units may indicate the worst model.
+
+        </p> 
+        <p>
+            <h4 class="text-secondary"> 2. \( R^2 \) Metric</h4> <br>  
+            It is one of the very useful metrics which is used in evaluation of regression models. \(R^2\) lies in the range of \( [0,1] \).
+            Higher the \(R^2\) value better the model is. Let's look at its definition & calculation.
+            Below is the formula for \( R^2 \) calculation  
+ 
+            \begin{align}
+               R^2=1- \frac{\sum_{i=1}^N \ (y_i-\hat{y_i})^2 }{\sum_{i=1}^N (y_i-\overline{ y})^2}
+            \end{align}
+             
+            \( \overline y \) = mean value of true \( y \)  <br>
+            \( y_i \) = actual value <br>
+            \(\hat y_i \) = predicted  value <br>
+            \( \sum_{i=1}^N \ (y_i-\overline{y})^2 \) = total variance in \(y \) <br>
+            \( \sum_{i=1}^N (y_i-\hat y_i)^2 \) = variance of y which is not captured by model 
+            
+        </p>
+        <p>
+            <strong>Another way of looking at \( R^2 \) metrics </strong> <br>
+            It is a ratio of variance explained by a model to the total variance present in a 
+            dependent variable. Let's look at the equation to understand this better. 
+                \begin{align}
+                R^2&=1- \frac{variance \ not \ captured \ by \ model}{ total \ variance} \\ \\
+                R^2&=\frac{total \ variance - variance \ not \ captured \ by \ model}{total \ variance} \\ \\
+                R^2&= \frac{variance \ explained \ by \ model}{total \ variance}
+                \end{align}
+            <br>
+            <strong>An example to understand \( R^2 \) better</strong> <br>
+            Let’s say we have a model with three independent variables as shown with below equation
+                \begin{align}
+                \hat y = a_1*x_1+a_2*x_2+a_3*x_3+b
+                \end{align}
+            Let’s say we trained our model and got \( R^2 = 0.6 \). 
+            It means 60% of total variance present in dependent variable \( (y) \) 
+            can be explained with the help of three independent variables( with the help of the model).
+            <br>
+            <br>
+            <strong>Problem with \( R^2 \)</strong> <br>
+            As we keep increasing the number of variables in the model \( R^2 \) value will keep on 
+            increasing. Consider two models
+                \begin{align}
+                
+                \hat y &= a_1*x_1+a_2*x_2+a_3*x_3+b ....................(1) \\
+                
+                \hat y &= a_1*x_1+a_2*x_2+a_3*x_3 + a_4*x_4 +b ...........(2)
+                \end{align}
+                <br>
+                Model 2 will always give higher \( R^2 \) as compared to model 1. 
+                It does not matter whether a newly added variable is actually useful for the model or not, 
+                it will always lead to increase in \( R^2 \). <br>
+ 
+                Because of more variables the model might start overfitting (which is bad). 
+                \(R^2\) will not be able to tell anything about overfitting of the model. 
+                A good metric should be able to tell whether adding a new variable to the model is useful or not.
+
+        </p>
+        <p>
+            <h4 class="text-secondary"> 3. Adjusted -\( R^2 \) Metric</h4> <br> 
+            Adjusted- \( R^2\) solves the problems which \( R^2\) metrics have. Whenever we add a new variable to the model, 
+            if improvement in model performance is not significant then adjusted-\(R^2\) will start to decline.
+             Which is an indicator whether a newly added variable is important for the model or not. 
+              Below is the formula to calculate the adjusted-\(R^2\) value.
+            \begin{align}
+            adjusted-R^2 = 1 - \frac{(1-R^2)*(n-1)}{(n-p-1)}
+            \end{align}
+            \(n\) = number of data points <br>
+            \(p\) = number of variables used in the model
+
+
+        </p>
+
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

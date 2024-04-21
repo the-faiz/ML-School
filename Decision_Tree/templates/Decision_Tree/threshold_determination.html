@@ -1,0 +1,94 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Determine the threshold for variable split in Decision Tree {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Decision Tree: How to choose best threshold and best variable for split</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> How best threshold is selected for a given variable </li>
+                    <li> How best variable is selected from all the given variables </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p>
+                We have been talking about two questions for quite some time
+                <ul>
+                    <li>
+                        How Does Tree decide which variable is to be selected for split 
+                    </li>
+                    <li>
+                        How does it decide threshold for the variable split
+                    </li>
+                </ul>
+                Now we have covered all the building blocks such as impurity calculation using entropy/gini/variance and the calculation
+                of information gain. Now it’s time to discuss these two questions. First we will talk about the second question and then
+                we will discuss the first question.
+           </p>
+           <p>
+                <h4>
+                    How does the decision tree determine the threshold for the variable split 
+                </h4>
+                We can have either continuous or discrete variables. First let’s understand the case of continuous variables. Following
+                are the steps involved in the threshold selection of a continuous variable.
+                <ul>
+                    <li>
+                        Sort variable
+                    </li>
+                    <li>
+                        Calculate information gain for each value of the variable.
+                    </li>
+                    <li>
+                        Select the threshold which gives maximum information gain.
+                    </li>
+                </ul>
+                Below visualisation explains these steps. There are two variables shown in the plot and positive and negative class data
+                points are marked as orange and green colours respectively. Let’s say we want to choose the best split threshold for the
+                income variable. <br>
+                There is a slider at the bottom which is the income value. You can change the value of income threshold using the slider
+                and it will update the information gain as well as threshold boundary in the plot. If you try different values of income
+                threshold you will find information gain is maximum at 14.5-15. Therefore the threshold for income variable in this case
+                can be 14.5.
+
+           </p>
+           <div> 
+               {%load plotly_dash%}
+
+               {%plotly_app name="information_gain" ratio=1%}
+           </div>
+           <p>
+                 <h4>How does decision tree determine the best variable for the split </h4>
+                 Following steps are involved in the selection of best variable for the split 
+                    <ul>
+                        <li>
+                            Select the best threshold for each variable using the process which we have discussed above.
+
+                        </li>
+                        <li>
+                            Select the variable which gives maximum information gain.
+                        </li>
+                    </ul>
+           </p>
+        </div>
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

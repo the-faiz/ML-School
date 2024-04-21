@@ -1,0 +1,158 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Mathematics for Linear Regression with one variable {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Linear Regression with one variable</h2>
+
+    <article>
+        <h4 class="text-secondary my-3">Mathematical Details of Linear Regression Model</h4>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Mathematical Equations for each component of  Linear Regression Model</li>
+                    <li> Details of Gradient Descent algorithm with Mathematical equations</li>
+                    <li> End to End understanding of the Algorithm </li>
+                </ul>
+
+            </div>
+
+        </div>
+        <p>
+            In <a href="../../../LR_one_variable/mathematics.html"> previous section</a> we had discussed how gradient descent can be used to find optimum value for model
+            parameters. In order to develop a concrete understanding of gradient descent, please go through
+             <a href="../../../gradient_descent_basics/gradient_descent_primer.html">this section</a> where we have taken a simple Objective function and solved it using gradient descent.<br>
+
+            In this Section we will discuss how we can combine Model, Loss function and gradient descent to train a
+            linear regression model. <br>
+            <br>
+            There are three major steps involved in the Linear Regression algorithm. <br>
+            <strong>1. Define a Model equation : </strong> This will be used to make predictions on newly observed data.
+            This equation is
+            also
+            used to identify model parameters. Equation 1 shows the model for the linear regression and \( a_1,\ b \)
+            are the model parameters.<br>
+        <div id="equation1">
+            \begin{align}
+            \hat{y_i}=a1*x_i+b ....................(1)
+            \end{align}
+        </div>
+        \( \hat{y_i}\) denote predicted target value for a given \(x_i \). <br>
+
+        <br>
+
+        <strong>2. Define the cost function :</strong> This measures the similarity of actual and predicted values of
+        the target variable.
+        Linear Regression uses Least Square cost function which tries to minimize the prediction error. Equation 2 shows
+        the cost function equation for Linear Regression. We calculate squared error between actual target value and
+        predicted target value and then take average on \( N \) data points.
+
+        \begin{align}
+        J(a1,b)=\frac{1}{2*N}*\sum_{i=1}^N( y_i-a1*x_i-b)^2 .............(2)
+        \end{align}
+
+        <strong>3. Optimization Algorithm </strong> We can use gradient Descent algorithm to train the model. Gradient
+        Descent takes the Objective function and keeps updating the model parameters until objective function is
+        minimized. <br>
+        <br>
+        There are Three Major steps involved in the gradient descent. <br>
+        <div class="ms-4 my-3">
+            <p>
+                <strong>I. Initialization :</strong> At this step we initialize model parameters with some random
+                values.
+                Choice
+                of initial values for model parameters may affect gradient descent learning[Link]. Let’s say we set
+                \(a_1 = 0 \
+                , \ b=0 \).
+            </p>
+            <p>
+                <strong>II. Gradient Calculation : </strong> We calculate gradient of cost function w.r.t to each of the
+                model parameters.
+                Let's say we have only one data point then our cost function will look like this ( put \( N = 1\) in
+                equation 2).
+                \begin{align}
+                J(a1,b)=\frac{1}{2}*( y-a1*x-b)^2
+                \end{align}
+
+                Inorder to calculate gradients we need to differentiate cost function with respect to each of the
+                parameters. <br>
+                Gradient of cost function w.r.t \(a_1 \):
+                \begin{align}
+                \frac{\partial J(a1,b)}{\partial a1}&=(y-a1*x-b)*(-x) \\
+                &=-(y-\hat{y})*x
+                \end{align}
+
+                Let's denote this with \( \partial a1 \). \(\hat{y} \) denotes predicted target value.<br>
+
+                Similarly gradient of cost function w.r.t. to b: <b></b>
+                \begin{align}
+                \frac{\partial J(a1,b)}{\partial b}&=(y-a1*x-b)*-1 \\
+                &=-(y-\hat{y})
+                \end{align}
+                Let's denote it by \( \partial b \). <br>
+                <br>
+                For \( N \) data points, first we need to calculate gradients for individual data points and then take
+                the average of gradients over \( N \) samples. Our final gradient equations will look like this
+                \begin{align}
+                \partial a1&=\frac{-\sum_{i=1}^N\ (y_i-\hat{y_i})*x_i}{N} \\
+                \partial b&=\frac{-\sum_{i=1}^N\ (y_i-\hat{y_i})}{N}
+                \end{align}
+                <br>
+                <strong>III. Update step : </strong> We can use gradients calculated in the previous step to update
+                parameter values. These
+                equations are given below
+                \begin{align}
+                a1 &= a1-\alpha*\partial a1 \\
+                b &= b-\alpha * \partial b
+                \end{align}
+
+                \( \alpha \) is the learning rate and it controls step size when gradient descent moves towards point of
+                convergence. We need to select the optimum value for \( \alpha \). Once we talk about hyperparameter
+                tuning we will explore how to choose the appropriate learning rate.
+            </p>
+        </div>
+        <h4 class="text-secondary my-3">Now let's put everything together</h4>
+        <p> 
+            We have looked at the model equation and objective function which are used in Linear regression algorithms.
+            Then we looked at the Gradient descent optimizer which iteratively calculates the model parameters values.
+            <br>
+            Gradient descent is summarized in below diagram.
+        </p>
+        <pre class="bg-dark text-white">
+                <code >
+                initialize : a1=0,b=0 
+                n=1000 number of steps      
+                for(i=1 to n) 
+                    { 
+                        calculate gradients:
+                        da1 and  db 
+                        perform updates :  
+                            a1=a1-alpha*da1 
+                            b=b-alpha*db  
+                    } 
+                </code>
+            </pre>
+
+
+
+
+        </p>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

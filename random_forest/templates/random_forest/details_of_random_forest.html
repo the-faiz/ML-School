@@ -1,0 +1,163 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Random Forest Model {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Details of Random Forest Model</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Details of random Forest Algorithm </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h4>
+                Random Forest  Algorithm
+            </h4>
+            <p>
+                It's an <a href="../../../ensemble_model/overview.html">ensemble </a>
+                 model which uses <a href="../../../ensemble_model/bagging.html"> bagging </a>
+                technique. It trains a large number of high depth decision trees in parallel
+                and then combines individual model’s predictions to generate final prediction. <br>
+                
+        </div>
+
+        <div>
+            <h4> Steps Involved in Random Forest</h4>
+            <p>
+                Diagram 1 explains the major steps involved in the random forest algorithm. There are three major steps in the entire
+                algorithm.
+            </p>
+            <ul>
+                <li>
+                    <h5>
+                        Bootstrap Random sampling
+                    </h5>
+                    <p>
+                        This step creates a bootstrap sampled data to train each individual model. These sampled datasets are independent of
+                        each other which helps each of the models to focus on slightly different parts of the training data and learn slightly
+                        different patterns. All of these datasets are created parallelly, hence reducing overall training time of the algorithm.
+                    </p>
+                </li>
+                <li>
+                    <h5>
+                        Train weak models
+                    </h5>
+                    <p>
+                        This step trains multiple weak models. Random forest uses a decision tree as a weak model. These weak models are of high
+                        depth and trained parallely on bootstrapped sampled data. Random forest tries to keep these weak models uncorrelated of
+                        each other and therefore while training the individual decision tree random selection of feature subset is done at each
+                        node level.  All the weak models are trained parallely and hence reduces overall training time.
+
+
+
+                    </p>
+                </li>
+                <li>
+                    <h5>
+                        Combine weak models to make final prediction
+                    </h5>
+                    <p>
+                        Final step is to combine predictions of each model to generate a final prediction. We can use following techniques
+                    
+                        
+                    </p>
+                    <h6>
+                        Combine classification model
+                    </h6>
+                    <p>
+                        We can use maximum voting technique. Prediction from each of the weak model is considered as a vote and the final predicted class is the class which gets maximum votes.
+
+                    </p>
+                    <h6>
+                        Combine regression model  
+
+                    </h6>
+                    <p>
+                        Final prediction can be the average of all the predictions from weak models.
+
+                    </p>
+
+                    <b> Can we do anything better to combine all the weak models?
+                    </b>
+                    <br>
+        
+                    <p>
+                        For both classification and regression problems we can calculate the average error for each of the weak models. In the
+                        case of the classification model this error can be the percentage of misclassified data points and for the regression
+                        model we can calculate the average of squared error over the data set. We can use the error of the individual model as a
+                        weight for contribution in the final prediction. High error weak models will get lower weights while low error weak
+                        models will get higher weights. We can calculate a weighted final prediction using these weights and prediction of weak
+                        models.
+                    </p>
+
+                </li>
+            </ul>
+
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'random_forest/random_forest_model.png' %}
+                    class="img-fluid rounded float-centre" alt="Random Forest Algorithm">
+            </div>
+            <p class="text-center"> Diagram 1: Random Forest Model  </p>
+
+        </div>
+        <div>
+            The Random forest algorithm would work best when all the weak learners are uncorrelated to each other. Random forest
+                algorithm does two kinds of sampling to make weak learners un-correlated to each other. 
+                <ul>
+                    <li>
+                        <h5>
+                            Bootstrapped sampling of training data 
+                        </h5>
+                        <p>
+                            Random forest does not train individual models on the same training data; instead it creates a new sample for each of
+                            the models to train on. It uses bootstrap sampling technique which is nothing but random sampling with replacement.
+                            Sampled data may or may not have the same number of data points as original training data has. Although we don’t tune it
+                            generally, it can also be tuned. In general sampled data with the same number of data points as the training dataset is
+                            preferred.This sampling ensures that individual models are trained on slightly different training datasets.
+                        </p>
+                    </li>
+                    <li>
+                        <h5>
+                            Random selection of feature subset 
+                        </h5>
+                        <p>
+                            While building the individual decision tree we select a random subset of features to create a data partition. At any
+                            given node, Random forest does not use all the features for selection of the best split feature. Instead it creates a
+                            randomly selected subset of features and then tries to select the best split features from it. This is exactly the same
+                            as the max_features hyperparameter in the decision tree.
+
+                        </p>
+                    </li>
+                </ul>
+
+            </p>
+            <p>
+                This way Random Forest makes sure the weak models ( decision trees) are uncorrelated and independent of each other.
+            
+            </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

@@ -1,0 +1,28 @@
+body{
+    margin:0px;
+    padding:0px;
+}
+.cont{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.left{
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* .right{
+    padding: 20px;
+    width:40%;
+    height: 30vh;
+    border-radius:10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} */

@@ -1,0 +1,144 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Gradient Descent Coding {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Write Code to train a Linear Regression Model \( y = m*x + c \)</h2>
+    <article>
+
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> We will write a working code for Linear Regression Model</li>
+                </ul>
+
+
+            </div>
+
+        </div>
+
+       <!-- <h4 class="text-secondary my-3"> Code Linear Regression algorithm from scratch</h4> -->
+        <p>
+            In this section we will code the Linear regression algorithm from scratch. <br>
+            First we will generate some data. Below Function generates data which follows the relation \( y= 2*x + 1+
+            \epsilon \). We will use this data to train a Linear Regression model. We will compare the coefficient 
+            from the trained model with actual coefficients.
+
+                <pre class="bg-dark text-warning">
+                    <code>
+    def generate_data(n,m=1):
+
+        """
+            create X data of shape (n,m)
+            create y data of shape (n,1)
+        """
+        x=np.linspace(10,100,1000)
+        y=2*x+1+np.random.randn(1000)
+        return x,y
+
+
+        ## data generation
+    x,y=generate_data(100)
+    print("shape of x {0}, shape of y {0}".format(x.shape,y.shape))
+                    </code>
+
+                </pre>
+
+            <p>
+                Now we will create some of the helper functions. These functions have been created based on our previous
+                discussion <a href="../../../LR_one_variable/mathematics2.html"> [link]</a> <br>
+
+                <strong>initialize_params : </strong> this will initialize the model parameters. <br>
+                <strong>predict : </strong> this is the model equation. If we know the value of \( a \ , b \) we can make a
+                prediction for
+                any given \(x\). <br>
+                <strong>calculate_loss : </strong> This function returns the squared loss function value for given actual
+                and predicted target
+                variables. <br>
+                <strong>calculate_grad : </strong>This function will return the gradient of cost function w.r.t each of the
+                parameters. <br>
+
+                <pre class="bg-dark text-warning">
+                    <code>
+        import numpy as np
+        def initialize_params(m=1):
+            """
+            this function will initialize the parameters 
+
+            """
+            a=np.zeros(m)
+            b=0
+            return a,b
+
+        def predict(x,a,b):
+            y_pred= x*a+b
+            return y_pred
+
+        def calculate_loss(y_true,y_pred):
+            return np.mean(np.square(y_true-y_pred))/2
+
+        def calculate_grad(x,y_true,y_pred):
+            da=np.mean((y_pred-y_true)*x,axis=0)
+            db=np.mean((y_pred-y_true))
+            return da,db
+                    </code>
+                </pre>
+
+                <h4 class="text-secondary my-3"> Main Loop</h4>
+                <p>
+                    <strong>train : </strong> this function combines all the helper functions and train the linear regression
+                    model on the dataset which we have created. 
+                </p>
+                <pre class="bg-dark text-warning">
+                    <code>
+    ## main loop combines above function to implement Linear regression
+    def train():
+        a,b =initialize_params()
+        learning_rate=.0001
+        for i in range(200):
+            y_pred=predict(x,a,b)
+            loss=calculate_loss(y,y_pred)
+            print("loss = {0} at iteration {1}".format(loss,i))
+            da,db=calculate_grad(x,y,y_pred)
+            a=a-learning_rate*da
+            b=b-learning_rate*db
+        return a,b
+                    </code>
+                </pre>
+
+                <p> 
+                    We have run code for 200 iterations with learning rate = 0.0001. We finally got \(a = 2.147,\ b = 0.067 \)
+                    (you may get slightly different values because of random seed in python). 
+                    Which are quite close to the actual values of model parameters. \(a = 2, \ b = 1 \) <br>
+                    <br>
+                    Till now we have only looked at how to train a Linear regression Model. 
+                    We have not talked about the goodness of model. We will discuss in detail what
+                     metrics we can use to access regression and classification models. <strong> [add link of metrics section]</strong>
+                      <br>
+
+                </p>
+
+
+            </p>
+
+        </p>
+
+
+    </article>
+
+</div> {% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

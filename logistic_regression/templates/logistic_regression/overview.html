@@ -1,0 +1,112 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Logistic Regression Overview {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">An Overview of Logistic Regression </h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> A brief Summary of Logistic Regression Model</li>
+                </ul>
+            </div>
+        </div>
+        <p>
+            Logistic regression is a supervised learning algorithm which is used for classification problems. Classification
+            problems have discrete types of dependent variables. For example Email spam classification where y=1 denotes an email is
+            spam while y=0 denotes it is not a sapam. Similarly we have credit default prediction problems. In this case y=1 denotes
+            customer defaulted on credit while y=0 denotes customer did not default on credit. Both examples have binary dependent
+            variables, there can be multiple classes associated with dependent variables but for now we will look at binary labels
+            only. <br>
+            
+            Let’s dig deeper into the credit default problem. We will have historical data of the customers such as income, Credit
+            utilisation etc. We will also have a dependent variable \( y \) which will have two levels \(y=1\) which means customer has
+            defaulted and \(y=0\) which means customer has not defaulted. Below table shows a few data points.
+
+        </p>
+        <div>
+            <table class="table table-bordered border-success table-striped text-center table-sm">
+                <caption> Example data points for classification problem
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Income</th>
+                        <th scope="col">Credit Utilization (%)</th>
+                        <th scope="col">class </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>9</td>
+                        <td>12</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>6</td>
+                        <td>0</td>
+
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>11</td>
+                        <td>1</td>
+
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>8</td>
+                        <td>0</td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div>
+            <p>
+                Below plot shows the class of each data point and credit utilisation. You can clearly see if an individual is using
+                higher credit then it is likely to default on the credit. <br>
+                
+                Logistic Regression fits the sigmoid curve in the data and classifies each of the data points to their respective class.
+                Logistic Regression does not output class directly rather it gives a probability score. Red curve in the plot shows the
+                sigmoid value corresponding to each of the data points ( just hover the mouse over the curve). Once we fit the sigmoid
+                curve in the data we can choose a threshold and classify each of the data points to its respective class. In this case
+                we can say if the sigmoid value is >= 0.5 then mark it as a positive class otherwise negative class.
+
+            </p>
+        </div>
+        <!-- this is plotly overview plot from view.py-->
+        {% autoescape off %}
+        {{overview_plot}}
+        {% endautoescape %}
+        
+        <div>
+            <h5 class="text-secondary my-3"> Summary of this lesson</h5>
+            <p>
+                Logistic regression tries to fit sigmoid curve in the data and generates a probability score for each of the data 
+                point. In the next chapter let's understand more about sigmoid curve.
+            </p>
+        </div>
+        
+  
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Sigmoid function</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

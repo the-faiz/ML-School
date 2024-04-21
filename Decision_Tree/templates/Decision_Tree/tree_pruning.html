@@ -1,0 +1,85 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Cost complexity tree pruning {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Tree Pruning </h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> What is tree pruning</li>
+                    <li> Types of Tree pruning  </li>
+                    <li> Cost Complexity pruning </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p> 
+                Decision Trees are prone to overfitting. Think of a full grown decision tree, if it is not stopped then it will
+                partition data in such a way that each training example is correctly predicted, which leads to overfitting scenarios. Inorder to
+                prevent this we need to carefully tune hyperparameters. Some of the important hyperparameters are listed below. 
+                <ul>
+                    <li>
+                        depth of the tree
+
+                    </li>
+                    <li>
+                        min_sample_split
+                    </li>
+                    <li>
+                        min_samples_leaf
+                    </li>
+                </ul>
+            </p>
+            <p>
+                These hyperparameters can control growth of the tree. If any of the criteria is not satisfied then the algorithm stops.
+                This approach of controlling the growth of trees is called <b>pre-pruning</b>. <br>
+                There is another way of controlling the growth of the trees, called <b> post-pruning</b>. This approach first allows the tree to
+                grow fully and then starts pruning the weakest link in the tree. Weakest links are the split which do not lead to a
+                significant improvement in the tree score. This is also known as <b> cost complexity pruning </b>.
+            </p>
+
+        </div>
+        <div>
+            <h4> Tree Score </h4>
+            <p>
+                Consider regression tree, tree score is calculated using the below equation. 
+                \( \text{tree score } = \text{SSR} + \alpha * |T| \)
+                <br>
+                <br>
+                \( \text{SSR} \) = Sum of squared residuals <br>
+                \( \alpha \) = cost complexity parameter (ccp) <br>
+                \( |T| \)= size of the tree ( number of leaf nodes) <br>
+
+
+
+            </p>
+            <P>
+                As we increase the depth of the tree, total SSR on training data keeps on decreasing. But Some times as we create new
+                partitions then those partitions are not very useful and hence decrease in SSR is not significant but \( \alpha * T \)  
+                term keeps on increasing and hence tree score starts increasing after that point. All the splits after this point are
+                pruned.
+
+            </P>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

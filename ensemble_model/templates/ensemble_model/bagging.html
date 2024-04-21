@@ -1,0 +1,100 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Bagging Model {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Bagging , Ensemble Model</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Overview of Bagging Model </li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        <div>
+                <p>
+                    Bagging trains multiple weak learners on different samples of training data. It trains multiple homogeneous models (
+                    mostly decision trees) on a subset of the training data instead of training them on the same training data. <br>
+                    
+                    Weak learners in bagging are of high depth trees , where individual models mostly overfit. They have low bias and high
+                    variance problems. Therefore bagging solves the problem of overfitting. <br>
+                    
+                    Bagging usually has a large number of models (50-200), this is a hyperparameter which needs to be tuned. All the weak
+                    learners are independent of each other and they are trained parallely. <br>
+                    We try to keep all the weak learners to be uncorrelated to each other so that they are able to learn different useful
+                    patterns in the data. That is the reason we create a different subset of data to train each of the models. <br>
+
+                </p>
+                <p>
+                    There are three major steps involved in the bagging. These steps are also highlighted in diagram 1.
+                    <ul>
+                        <li>
+                            <h5>
+                                Bootstrap sampling
+                            </h5>
+                            <p>
+                                Bagging model uses this technique to create a random sample of training data. It is nothing but random sampling with
+                                replacement. For each of the weak learners a random sample is generated from the original data and model is trained on
+                                the newly created bootstrap samples.
+                            </p>
+                        </li>
+                        <li>
+                            <h5>
+                                Train weak models
+                            </h5>
+                            <p>
+                                Bagging trains homogeneous weak learners. Generally decision trees are used (but we can choose any model). We try to
+                                keep all the weak learners to be uncorrelated from each other and bootstrap sampling helps us to achieve this. These
+                                weak learners mostly overfit on the training samples. Hence bagging solves the problem of overfitting by combining the
+                                multiple weak learners.
+
+                            </p>
+                        </li>
+                        <li>
+                            <h5>
+                                Combine all the models to make a final prediction
+                            </h5>
+                            <p>
+                                In case of classification problem we can use maximum voting technique while for regression problem we can take average
+                                of all the predictions. <br>
+                                We can also adopt weighted maximum voting techniques for classification and weighted average technique for regression.
+                                Weights can be calculated by the average error of the individual model. Models with high error will have least
+                                contribution in the final prediction.
+
+                            </p>
+                        </li>
+                    </ul>
+
+                    Random forest is an example of the bagging algorithm. Random Forest is implemented slightly differently than what we have discussed above.
+                    For more details look at this <a href="#"> [add link to the random forest]</a>
+                </p>
+                    {% load static %}
+                    <div class="my-4">
+                        <img src={% static 'ensemble_model/bagging_overview.png' %}
+                            class="img-fluid rounded float-centre" alt="Overview of Bagging Model">
+                    </div>
+                    <p class="text-center"> Diagram 1: Brief Overview of Bagging Model  </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#"> Ensemble Model</a>
+    </li>
+    <li>
+        <a href="#">Random Forest</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

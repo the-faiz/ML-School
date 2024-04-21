@@ -1,0 +1,132 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Metrics for KMeans algorithm {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Model Evaluation Metrics for KMeans Algorithm</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Which metrics can be used for unsupervised learning </li>
+                    <li> WSCC (with in cluster squared sum) </li>
+                    <li> Silhoutte Score </li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <p>
+                There is a long list of metrics available to assess the quality clusters identified by any clustering 
+                algorithm. This list can be divided into two types of metrics
+                <ul>
+                    <li>
+                        When True label  is available 
+                    </li>
+                    <li>
+                        When True label is not available 
+                    </li>
+                </ul>
+                There is a very good documentation on metrics from sklearn library, where a Complete list of metrics can be found.
+                <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation" >here</a>
+
+            </p>
+            <p>
+                We will focus on 2nd types of metrics where the True label is not available. We will talk about two metrics which 
+                are frequently used but readers can explore sklearn documentation for other metrics.
+
+                <ul>
+                    <li>
+                        <h5 class="text-black my-3"> WCSS ( within cluster squared sum )</h5> 
+                        This metric is the coherency measure of clusters. Lower values 
+                        indicate more coherency while higher values indicate low coherency.  
+                        There are two steps involve in the calculation of WSCC.
+                        <ol>
+                            <li>
+                                <b>Calculate the mean value of distance between a data point and  its cluster centroid.</b>
+                                <div style="font-family: MathJax_Main;"> 
+                                    \begin{align}
+                                        Cluster \ (C_i) = \frac{1}{p_i}* \sum_{j=1}^{p_i} ( X_j- centroid_i)^2
+                                    \end{align}
+                                    \( p_i= \) number of data points in cluster i <br>
+                                    \( X_j= \) data points which belongs to cluster i
+
+                                </div>
+                                <br>
+                                <li>
+                                    <b>Calculate average value of \( C_i \) across clusters. </b>
+                                    <div style="font-family: MathJax_Main;">
+                                        \begin{align}
+                                            WCSS = \frac{1}{K} * \sum_{i=1}^K C_i
+                                        \end{align}
+                                        \( K \) denotes number of clusters
+                                    </div>
+                                    
+                                </li>
+                            </li>
+                        </ol>
+                        <br>
+                        This is one of the very easy to understand metrics. Lower value of the metrics indicate better 
+                        quality of clusters. There is no upper and lower bound of this metric. 
+                        Therefore comparison of two models becomes difficult.  Consider two models below
+                        Model 1 , WCSS = 500
+                        Model 2, WCSS = 400
+                        Model 2 is definitely better than model 1 but It does not tell anything about how 
+                        close we are with the best model. 
+
+                    </li>
+                    <li>
+                        <h5 class="text-black my-3">Silhouette Score</h5> 
+                        This score is a measure of how similar a data point is to its own cluster compared to other clusters. 
+                        The silhouette ranges from −1 to +1, where a high value indicates that the data point is well matched 
+                        to its own cluster and poorly matched to neighboring clusters.
+                        <a href="https://en.wikipedia.org/wiki/Silhouette_(clustering)">Wiki</a>  
+                        <br>
+                        <b>Calculation of Silhouette Score</b> <br>
+                        Silhouette score is calculated for each data point and then we take the average value of silhouette score
+                        across the data points. To calculate the silhouette score for a data point we calculate two quantities.
+                        <br>
+                        \( a \) : mean distance between a sample and all the data point in the cluster <br>
+                        \( b \) : mean distance between sample and all the data point in the next nearest cluster
+                        <div style="font-family: MathJax_Main;">
+                            \begin{align}
+                            s_i &= \frac{b-a}{max(a,b)} \\ \\
+                            S &= \frac{1}{N} * \sum_{i=1}^N s_i
+                            \end{align}
+                            \( s_i \) silhouette score for sample i <br>
+                            \( S \) Silhouette score
+
+                        </div>
+                        <br>
+                        Silhouette Analysis can be done for individual samples and this can be used to pick optimum 
+                        number of clusters. sklearn documentation has a very good example on this. Readers are advised 
+                        to look at this analysis.
+                        <a href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py">link</a>
+                    </li>
+                </ul>
+
+            </p>
+        </div>
+
+ 
+        
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

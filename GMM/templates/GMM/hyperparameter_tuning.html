@@ -1,0 +1,110 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Metrics for KMeans algorithm {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Hyperparameter tuning for GMM Algorithm</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Evaluation metrics for GMM Model</li>
+                    <li> How to select number of cluster in GMM</li>
+                    <li> How to select covariance matrix type in GMM </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            There are two important hyperparameter in the Gaussian Mixture Models
+            <ul>
+                <li>
+                    <b>Number of Clusters</b>
+                </li>
+            
+                <li> 
+                    <b>Type of Covariance matrix</b> <br>
+                    Covariance matrix determine the shape and orientation of clusters
+                    There are four choices available in sklearn implementation
+                    <ul>
+                        <li>
+                            Spherical
+                        </li>
+                        <li> diag</li>
+                        <li> tied</li>
+                        <li>full</li>
+                    </ul>
+                    To understand more about these types look at sklearn documentation.
+                    <a href="https://scikit-learn.org/stable/auto_examples/mixture/plot_gmm_covariances.html#sphx-glr-auto-
+                    examples-mixture-plot-gmm-covariances-py">link</a>
+                </li>
+            </ul>
+            In order to select the optimum number of clusters and best choice of the type of covariance 
+            matrix we can use BIC- Bayesian Information Criteria. 
+
+        </div>
+        <br>
+        <div>
+            <h4>BIC</h4>
+            It is one of the criteria used to select the best model, it is based on maximum likelihood function. Lower value of BIC
+            metrics indicate the best model. Below is the equation used for the calculation of BIC metrics
+            <div style="font-family: MathJax_Main;">
+                \begin{align}
+                BIC = -2*\log(\hat{L}) + \log(N)*d
+                \end{align}
+            </div>
+            \( \hat{L} =\) maximum likelihood of the model <br>
+            \( N = \) number of data points <br> 
+            \(d = \) number of parameters in the model <br>
+        
+            A better fit of normal distribution will lead to better likelihood estimates and hence lower the value of BIC metrics. <br>
+            <b>Note :</b> More details of BIC can be found here <a href="https://en.wikipedia.org/wiki/Bayesian_information_criterion#:~:text=
+            In%20statistics%2C%20the%20Bayesian%20information,lower%20BIC%20are%20generally%20preferred.">wiki</a> , 
+            <a href="https://scikit-learn.org/stable/modules/linear_model.html#aic-bic">scikit-learn</a>
+        </div>
+        <br>
+        <div>
+            <h4>How BIC metrics helps to identify overfitting in clusters</h4>
+            In general as you increase the number of parameters in the model negative log likelihood tends to improve. But too many
+            parameters might cause overfitting in the model. Along with the negative log likelihood BIC metrics also adds a penalty
+            term \( (\log (N)*d ) \) where d is number of parameters in the model. <br>
+            Now if we increase the number of parameters and this does not lead to significant improvement in the negative log
+            likelihood term then the term which contains the number of parameters starts dominating and BIC value starts increasing,
+            indicating overfitting in the model.
+
+        </div> 
+
+        <div>
+            <p>
+                <h4> Hyperparameter Selection</h4>
+
+                We have plotted BIC metrics as a function of the number of clusters for each of the covariance types.<br>
+                Covariance type = full and cluster_numer =2 gives the minimum BIC value. Hence these are the best hyperparameters.
+
+            
+                {% autoescape off %}
+                {{hyperparameter}}
+                {% endautoescape %}
+
+                You can find a very good example on hyperparameter tuning from scikit-learn documentation
+                <a href="https://scikit-learn.org/stable/auto_examples/mixture/plot_gmm_selection.html#sphx-glr-auto-examples-mixture-plot-gmm-selection-py">scikit-learn</a>
+            </p>
+        </div>
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

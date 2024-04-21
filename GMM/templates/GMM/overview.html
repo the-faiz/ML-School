@@ -1,0 +1,136 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Gaussian Mixture Models {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Overview of Gaussian Mixture Models (GMM)</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Comparision of GMM and KMeans </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p>
+                In this section we will mostly do a comparison of GMM with KMeans and try to understand
+                The advantages of GMM over KMeans. <br>
+                Gaussian Mixture model is a probabilistic clustering algorithm. It assumes that clusters which are present in the data
+                follow gaussian distributions. Therefore if there are K clusters in the data then K gaussian distributions can be fitted
+                to the data. Finally the algorithm generates a probability distribution for each of the data points. This probability
+                distribution indicates what is the probability that a given data point belongs to a given cluster. Let’s Look at the
+                output of the algorithm to understand it better. Let’s assume there are three clusters in the data. Algorithm will
+                output a probability vector for each of the data points.
+            </p>
+            <table class="table table-bordered border-success table-striped text-center table-sm">
+                <caption> Output probability distribution of GMM
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Probability for cluster 0  </th>
+                        <th scope="col">Probability for cluster 1</th>
+                        <th scope="col">Probability for cluster 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>0.8</td>
+                        <td>0.15</td>
+                        <td>0.05</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>0.2</td>
+                        <td>0.1</td>
+                        <td>0.7</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>0.15</td>
+                        <td>0.75</td>
+                        <td>0.1</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>0.7</td>
+                        <td>0.1</td>
+                        <td>0.2</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                As you can see in the above table GMM algorithm outputs a probability distribution as opposed to KMeans algorithm which
+                assigns a cluster id to each of the data points. Therefore GMM is called soft clustering while Kmeans is called hard
+                clustering approach.<br>
+                
+                One of the important concerns in KMeans algorithm is the shape of clusters. KMeans generate clusters which are spherical
+                in nature. But it is not always the case that clusters would be spherical in shape. GMM is able to learn different
+                shapes of clusters. GMM tries to fit a gaussian distribution to each of the clusters. Gaussian distributions have two
+                parameters, the mean and the covariance matrix. Mean controls the centre point of the distribution while covariance
+                matrix controls the shape of the distribution. <br>
+                
+                KMeans generates clusters which are of equal sizes. GMM generates clusters of unequal sizes. This also gives an edge to
+                GMM over KMeans.<br>
+                
+                Below is the summary of KMeans and GMM algorithms.
+            </p>
+            <table class="table table-bordered border-success table-striped text-center table-sm">
+                <caption> Comparision of GMM and KMenas
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">KMeans</th>
+                        <th scope="col">GMM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hard clustering method</td>
+                        <td>Soft clustering approach</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Creates clusters of spherical shape</td>
+                        <td>Can create clusters of different shape</td>
+                       
+                    </tr>
+                    <tr>
+                        
+                        <td>Creates clusters of equal sizes</td>
+                        <td>Can create clusters of unequal size.</td>
+                    </tr>
+                </tbody>
+            </table> 
+            <p>
+                Above discussion highlights how GMM is better than KMeans algorithm. Does it mean one should always choose GMM over
+                KMeans? Selection of algorithms is a challenging step and there can be many factors you would want to look at before
+                finalising the algorithm. One of the factors can be data distribution. <a href="https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html#sphx-glr-auto-examples-cluster-plot-cluster-comparison-py"> Sklearn documentation
+                </a> has a detailed analysis on comparison of different clustering algorithms on different types of datasets.
+
+            </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

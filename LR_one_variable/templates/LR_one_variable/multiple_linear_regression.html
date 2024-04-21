@@ -1,0 +1,145 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Mathematics for Linear Regression with one variable {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Linear Regression with Multiple Variables</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Mathematical Details of Model with multiple variables</li>
+                </ul>
+            </div>
+        </div>
+
+        <p>
+            So far we have looked at Linear regression with one variable only. But in real life, whenever you build a
+            regression model you will have more than one independent variable. Now we will look at how mathematical
+            equations would change in case of more than one independent variable. <br>
+            <br>
+            We will have a dataset \( (X, y) \) where \(X\) will have a shape of \( (N,k) \) and y will have a shape
+            of \( (N,1) \). \(N\) represents the number of data points, \(k\) represents the number of features in
+            \(X\). <br>
+        </p>
+        <p>
+            We will look at the Mathematical details of three major steps involved in the Linear Regression. <br>
+            <br>
+            <strong>1. Model</strong> <br>
+            Model defines the relationship between independent variables \(X\) and dependent variable \(y\). Since we
+            have \(k\) features therefore model will have \(K+1\) parameters
+
+            \begin{align}
+            \hat{y}=a_1*x_1+a_2*x_2.....a_k*x_k +b
+            \end{align}
+
+            \(a_1,a_2....a_k\) are called weights while \(b\) is called bias term.
+            <br>
+            <br>
+            <strong>Question: what are weights and bias terms and what do they signify?
+            </strong>
+        </p>
+
+        <p>
+            <strong>2. Cost Function</strong> <br>
+            We will use the same Least Square error cost function which we have seen earlier. This time Cost function
+            will have
+            \(k+1\) parameters.
+            \begin{align}
+            J(a_1,a_2...a_k,b)&=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})^2}{2*N} \\
+            J(a_1,a_2...a_k,b)&=\frac{\sum_{i=1}^N \ (y_i-a_1*x_1-a_2*x_2......-a_k*x_k-b)^2}{2*N}
+            \end{align}
+
+        </p>
+
+        <p>
+            <strong>3. Optimizer </strong> <br>
+            We will use gradient descent as the optimization algorithm for linear regression. It has three major steps
+            <br>
+
+            <strong>I. Initialization</strong> <br>
+            We can initialize \( \ a_1,\ a_2....a_k,\ b \) with some random values, Let’s say we set \( \ a_1=0,\
+            a_2=0\, ……a_k=0, \ b=0 \ \).
+
+        </p>
+
+        <p>
+            ,<strong>II. Gradient calculations</strong> <br>
+            Since we have \(k+1 \) parameters, we can calculate gradient of cost function w.r.t to
+            each of \( k+1 \) parameters
+
+            \begin{align}
+            \partial a_1 &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{1i})}{N} \\
+            \partial a_2 &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{2i})}{N} \\
+            .\\
+            .\\
+            .\\
+            \partial a_k &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{ki})}{N} \\
+            \partial b &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-1)}{N} \\
+            \end{align}
+
+        </p>
+        <p>
+            <strong>III. Update step</strong> <br>
+            At this step the optimizer uses gradients calculated in the previous step to perform parameter
+            update.
+            \begin{align}
+            a_1&=a_1-\alpha * \partial a_1 \\
+            a_2&=a_2-\alpha * \partial a_2 \\
+            . \\
+            .\\
+            a_k&=a_k-\alpha * \partial a_k \\
+            b&=b-\alpha * \partial b
+            \end{align}
+
+        </p>
+
+        <p>
+            <h4 class="text-secondary my-3">Now let's put everything together</h4>
+            <p> 
+                We have looked at the model equation and objective function which are used in Linear regression algorithms.
+                Then we looked at the Gradient descent optimizer which iteratively calculates the model parameters values.
+                <br>
+                Complete process is summarized in below diagram.
+            </p>
+            <pre class="bg-dark text-white">
+            <code >
+                initialize : a1=0, a2=0 .....ak=0, b=0 
+                n=1000 number of steps      
+                for(i=1 to n) 
+                    { 
+                        calculate gradients:
+                        da1 , da2 , da3 ....da_k and  db 
+                        perform updates :  
+                            a1=a1-alpha*da1 
+                            a2=a2-alpha*da2
+                            .
+                            . 
+                            . 
+                            ak=ak-alpha*da_k
+                            b=b-alpha*db  
+                    } 
+            </code>
+            </pre>
+
+        </p>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

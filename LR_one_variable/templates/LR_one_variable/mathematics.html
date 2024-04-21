@@ -1,0 +1,180 @@
+
+
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Mathematics for Linear Regression with one variable {% endblock myTitle %} 
+{% block mainPage %} 
+ <div class="card-body">
+    <h2 class="card-title my-3">Linear Regression with one variable</h2>
+
+    <article>
+        <h4 class="text-secondary my-3">Mathematical Overview of Linear Regression </h4>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> How to define Mathematical Model for Linear Regression</li>
+                    <li> What is Least Square error function</li>
+                    <li> Basic understanding of Optimization algorithm</li>
+                </ul>
+
+            </div>
+
+        </div>
+        <p>
+            First we will explore the various components of the Linear Regression algorithm, then we
+            will combine all the components to understand the complete algorithm. Generally
+            Machine learning algorithms have three major components
+
+        <ul>
+            <li>Model</li>
+            <li>Cost Function</li>
+            <li>Optimizer</li>
+        </ul>
+        <p>
+            Let's explore details of these three components in context of linear regression.
+        </p>
+        <p>
+        <h5> 1. Model</h5>
+        Model defines the relationship between dependent variable ( \(y\) ) and independent variables (
+        \(x\) ).
+        Different ML algorithms have their own models. House price prediction equation which we defined
+        in the previous section is an example of a
+        linear model. For the sake of simplicity we will define our model with only one variable and
+        then we will extend our learning to multi-dimensional input.<br>
+        Linear Regression model can be defined by equation 1.
+        <div id="equation1">
+            \begin{align}
+            \hat{y_i}=a1*x_i+b ....................(1)
+            \end{align}
+        </div>
+        \( a1,\, b \) are the parameters of the model and we will talk about how to calculate model
+        parameters in the next section. <br>
+
+        \( \hat{y_i} \) denotes predicted y value for a given x. <br>
+        <div class="my-4">
+            <strong> Model essentially tells us for any given \( x \) value how we can predict \( y \)
+                value. </strong>
+        </div>
+        <div>
+            We should be careful when we are defining the model. \(x\) variable should have at least
+            some
+            information about the \(y\) variable. Let’s understand this with variable selection through
+            visualization. Look at the below diagram. Left plot has a very good linear
+            relation between \(x_1\) and \(y\) variables but the right plot looks a little random.
+            There is no linear relationship between \( x_2 \ and \ y\).
+            Therefore it
+            makes sense to define a linear model using \(x_1\) rather than \(x_2\). <br>
+        </div>
+        {% load static %}
+        <div class="text-center">
+            <img src={% static "LR_one_variable/compare_x_y_model_for_mathematics.png" %} class="img-fluid rounded float-centre"
+                alt=" ">
+        </div>
+        </p>
+        <p>
+        <h5> 2. Cost Function </h5>
+        Cost function tells us the closeness of actual and predicted values of dependent variables.
+        Model equation gives us the predicted value of the dependent variable(\(\hat{y}\)) and we
+        already have the actual value of the dependent variable(\(y\)) from our data. We can use these
+        two values to define the error between the actual and predicted values.In case of linear
+        regression we use squared error cost function \( (y_i-\hat{y_i})^2 \). Since we have N data
+        points therefore we can calculate error for each of the observations and then take the average
+        of errors.
+        <div id="equation2_3">
+            \begin{align}
+            error&= \frac{1}{2*N}*\sum_{i=1}^N( y_i-\hat{y_i})^2 .................(2) \\
+            &=\frac{1}{2*N}*\sum_{i=1}^N( y_i-a1*x_i-b)^2.........................(3)
+            \end{align}
+        </div>
+
+        Equation 3 is obtained by substituting the value of \( \hat{y_i} \) from <a href="#equation1">
+            equation 1</a>. In this
+        equation \( a1,b \) are the parameters and \( x_i,y_i \) comes from data. We can define the cost
+        function using the letter \( J(a1,b)
+        \). So our cost function equation looks like this
+        \begin{align}
+        J(a1,b)=\frac{1}{2*N}*\sum_{i=1}^N( y_i-a1*x_i-b)^2
+        \end{align}
+
+        <div>
+            <h6 class="text-secondary"> This error is called Least Square Cost Function.</h6>
+            <p class="text-dark">
+                Above equation clearly shows that Average error is a function of model parameters \(
+                a1,b \). Linear Regression Algorithm calculates model parameters in such a way Average
+                error is minimized.
+
+            </p>
+        </div>
+
+        </p>
+        <div>
+            <p>
+            <h5>3. Optimizer</h5>
+            Optimizer helps us to get optimum values of parameters \( a_1 ,b \) such that overall error
+            is
+            minimized. First Let’s try to build a mental understanding of the different steps involved
+            in the optimization process. <br>
+            If we closely look at the cost function equation then you will observe that model parameters
+            \( a_1,b \) are the only unknown in the equation.
+            Other things such as \(x_i,\,y_i \) are the data points which are known to us and \( N \) is
+            the total number of data points. <br>
+
+            Optimizer will choose some initial values for parameters \( a_1,b \). Initial values can be
+            anything. Let's say we set \(a_1=0,\ b=25\). Then it will calculate the cost function value
+            using intial values.
+            <br>
+            After this optimizer performs an update of parameter values. It will take a step towards the
+            direction in which Cost function is Minimized.
+            Optimizer will keep updating the parameter values until we get the minimum error. <br>
+            Below Diagram explains this process. Left plot is at the initial step where we set \(a_1=0,\
+            b=25 \). Fitted line is horizontal and the cost function value is very high.
+            Middle plot shows a little improvement in the fitted line. The right plot shows the best
+            fitted line.
+            As line fitted line improves cost function value keeps on decreasing.
+            Red line shows the residuals which is the difference between actual value and predicted
+            value for a given data point.
+            {% load static %}
+            <div class="text-center my-4">
+                <img src={% static "LR_one_variable/optimizer_understanding.png" %} class="img-fluid rounded float-centre" alt="optimizer_understanding">
+            </div>
+
+            </p>
+            <div class="text-secondary">
+                <h6>Optimization Algorithm that we have discussed above is called Gradient Descent.</h6>
+            </div>
+        </div>
+
+        <div>
+            <h5> Overall Summary of the This Chapter</h5>
+            <ul>
+                <li>
+                    First we defined a model which is used to calculate the predicted y values.
+                </li>
+                <li>
+                    Secondly we looked at the squared cost function, This is also called objective
+                    Function or loss function.
+                </li>
+                <li>
+                    We looked at how optimizer uses both model and cost function to calculate the best
+                    model parameters.
+                </li>
+            </ul>
+        </div>
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->            
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

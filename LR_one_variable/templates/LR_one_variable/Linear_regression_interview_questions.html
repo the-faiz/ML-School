@@ -1,0 +1,37 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Mathematics for Linear Regression with one variable {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Interview Questions Linear Regression</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> We will explore overfitting and underfitting problems</li>
+                    <li> We will learn about regularization</li>
+                </ul>
+            </div>
+        </div>
+
+ 
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Train-val-test data split</a>
+    </li>
+    <li>
+        <a href="#">L1 & L2 Regularization</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

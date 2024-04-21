@@ -1,0 +1,191 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Gaussian Mixture Models {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Mathematical Details of Gaussian Mixture Models</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> We will learn mathematical steps involved in GMM </li>
+                    <li> We will explore E and M steps of the Expectation Maximization(EM) Algorithm </li>
+                    <li> We will explore how parameter update is performed in GMM </li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <p>
+                GMM is a probabilistic clustering algorithm. GMM tries to fit a mixture of distribution to the given training data
+                points. Each component of the mixture is assumed to be a Normal distribution. Consider there are K clusters in the
+                training data, GMM tries to fit probability distribution which is shown in below equation
+                <div style="font-family: MathJax_Main;">
+                    \begin{align}
+                    p(x) = \pi_1*𝑁_1(\mu_1,\Sigma_1)+\pi_2*𝑁_2(\mu_2,\Sigma_2) . . .\pi_K*𝑁_K(\mu_K,\Sigma_K) ... (1)
+                    \end{align}
+                </div>
+                
+                \( \pi_k \) is the weight of mixture (cluster) K in overall distribution. <br>
+                <br>
+                <span style="font-family: MathJax_Main;"> \( N_k( \mu_k , \Sigma) \)
+                </span> Normal distribution which fits best to the cluster k.
+            </p>
+            <p>
+                Just like Kmeans algorithm, number of clusters (K) is user supplied hyperparameter.
+                Algorithm tries to fit K clusters to the data and each of the clusters follows a Normal distribution. GMM used
+                Expectation Maximization (EM) algorithm as a backbone algorithm to fit normal distributions to the clusters. We will
+                discuss how E and M steps of the EM algorithm are incorporated in the GMM algorithm.   
+                <br>
+                Note : Readers are advised to explore details of the EM algorithm. 
+                <a href="https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm"> wiki</a>
+            </p>
+        </div>
+        <div>
+            <h4>Problem Statement </h4>
+            <p>
+                We are given \( [x_1,x_2. . .x_n] \) N data points and a hyperparameter K (number of clusters), our objective is to fit
+                K Gaussian distributions to the data.
+            </p>
+            <h4> Solution approach </h4>
+            <p>
+                Normal distribution requires only two parameters \( \mu ,\Sigma \) [link]. Since We have K distributions therefore we have 
+                <span style="font-family: MathJax_Main;">\(
+                \mu_1,\mu_2.....\mu_k, Σ_1,Σ_2. . .Σ_k \) </span> parameters which need to be learned from data. <br>
+                
+                There is another set of parameters \( \pi_1, \pi_2 . . .\pi_k \) which denotes weights of each cluster in overall
+                distribution.
+                <br>
+                <br>
+                If we know the the values of these parameters then we can define K normal distributions 
+                <span style="font-family: MathJax_Main;">\(𝑁_1(\mu_1, \Sigma_1),
+                𝑁_2(\mu_2, \Sigma_2)..........𝑁_k(\mu_k, \Sigma_k) \) </span> <br>
+                
+                Using the above distributions we can calculate the probability that a data point belongs to the Kth distributions, This
+                will be a K dimensional vector. We call it the responsibility vector. [using equation 2]
+                
+                Let's look at the steps to achieve all this. <br>
+                There are Three major steps involved in the process 
+                <ul>
+                    <li>
+                        <h5>Initialization</h5>
+                        This step initialises all the model parameters we have discussed above. <br>
+                        Initialize <span style="font-family: MathJax_Main;">
+                            \( \mu_1,\mu_2. . .\mu_k, \Sigma_1,\Sigma_2. . .\Sigma_k \) </span> <br>
+                        initially we can set \( \pi_1= \pi_2= . . .\pi_k = 1/K \) 
+
+                    </li>
+                    <br>
+                    <li>
+                        <h5>E-Step : Calculate Responsibility Vector for each data point</h5> 
+                        This step evaluates posterior probability of data points belonging to K clusters. GMM algorithm calculates the
+                        responsibility vector for each of the data points. <br>
+                        Responsibility vector is a probability distribution which denotes the probability that a data point belongs to the Kth
+                        cluster. <br>
+                        We can use all the model parameters \( \mu , \Sigma \) and calculate the responsibility vector for each of the data
+                        points. <br>
+                        <div style="font-family: MathJax_Main;">
+                            \begin{align}
+                            r_{nk}=\frac{\pi_k*𝑁(x| \mu_k, \Sigma_k)}{∑_{i=1}^K𝑁(x | \mu_i, \Sigma_i )}
+                            \end{align}
+                        </div>
+                        Look carefully This equation is nothing but Bayes theorem.
+                        This quantity represents the probability that the nth data point belongs to cluster k.
+                        if we sum the probability vectors for all data points then we get a new vector which is called total responsibilities of
+                        clusters.<br>
+                        \( N=[N_1,N_2....N_K] \)
+
+                    </li>
+                    <br>
+                    <li>
+                        <h5>M-step:  Update Model Parameters 
+                        </h5>
+                        This step updates all the Model Parameters using newly calculated cluster responsibilities. We will look at how to
+                        update mean vectors, covariance matrices and cluster weights parameters for each of the clusters.
+
+                        <ul>
+                            <li>
+                                <h6>Mean Vector update</h6>
+                                Mean vector for Kth cluster is updated using below equation
+                                <div style="font-family: MathJax_Main;">
+                                    \begin{align}
+                                    \mu_k=\frac{1}{N_k} \sum_{j=1}^N r_{jk}*x_j
+                                    \end{align}
+                                    \( N_k \) denotes total responsibility of cluster K.
+                                </div>
+                                This quantity is very close to the weighted average of all data points weighted by their probabilities. Data points
+                                which have higher probabilities get higher weights in cluster centroid calculation.
+
+                            </li>
+                            <br>
+                            <li>
+                                <h6>Covariance Matrix update </h6>
+                                Covariance matrix for Kth cluster is updated using below equation
+                                <div style="font-family: MathJax_Main;">
+                                    \begin{align}
+                                    \Sigma_k= \frac{1}{N_k} \sum_{j=1}^N r_{jk} ( x_j-\mu_k)(x_j-\mu_j)^T
+                                    \end{align}
+                                    \( N_k \) denotes total responsibility of cluster K.
+                                </div>
+                            </li>
+                            <br>
+                            <li>
+                                <h6>  Cluster weight update</h6>
+                                Following equation is used for cluster update step
+                                <div style="font-family: MathJax_Main;">
+                                    \begin{align}
+                                    \pi_k=\frac{N_K}{N}
+                                    \end{align}
+                                    where N = total number of data points. <br>
+                                    \( N_k \) denotes total responsibility of cluster K.
+                                </div>
+                            </li>
+                            
+
+                        </ul>
+                        
+
+                    </li>
+                </ul>
+                GMM Algorithm will keep updating cluster responsibilities (E-step) and parameters (M-Step) iteratively until a
+                convergence criteria is satisfied.
+
+            </p>
+            <h5>Convergence Criteria in GMM</h5>
+            GMM tries to fit K mixture distribution in such a way that the product of all the data points belonging to the fitted
+            distribution is maximised. This is called the maximum likelihood estimate (MLE).
+            <div style="font-family: MathJax_Main;">
+                \begin{align}
+                p(x) &= \pi_1*𝑁_1(\mu_1,\Sigma_1)+\pi_2*𝑁_2(\mu_2,\Sigma_2)...\pi_K*𝑁_K(\mu_K,\Sigma_K) \\
+                \text{MLE} &= \prod_{i=1}^N p(x_i) \\
+                -\log(MLE) &= -\sum_{i=1}^N p(x_i) \\
+                \end{align}
+            </div>
+            Negative log likelihood shown above is the cost function in the GMM. GMM tries to minimize this function. Algorithm keeps
+            iterating until this function is minimised. <br>
+            This function is used to determine the stopping criteria in GMM. We can compare the cost function value of previous
+            iterations and the current iteration and if there is no significant improvement in the cost function then we can stop
+            the iteration loop.
+
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

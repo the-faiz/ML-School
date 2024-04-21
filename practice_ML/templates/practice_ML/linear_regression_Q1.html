@@ -1,0 +1,134 @@
+{% extends '../code_editor/code_editor.html' %}
+<!-- add a base template for code editor -->
+{% csrf_token %}
+{% block myTitle %} {{page_title}} {% endblock myTitle %}
+{% block Question %}
+<div class="row m-3 bg-dark rounded p-2 text-light" style="min-height: 200px;">
+
+    <h1>Implement Linear Regression</h1>
+    
+
+    <article>
+        <br>
+        You are given a pair of data points \( (X,y) \), where \( X \) is a list of \( (n \ X \ k ) \) and y is a list of \( n \) elements. <br>
+        Assuming \( X \) and \( y \) follows a linear relationship which is given by following equation <br>
+
+
+            \( y = a_1*x_1 + a_2*x_2 .... a_k*x_k + b \) <br>
+
+
+            write a program to estimate values of \( a_1, a_2, .. a_k \) and \( b \). <br>
+            <br>
+            Algorithm: <br>
+
+
+            <b>Step 1: </b> Initialize values of \( a \) and \( b \) <br>
+
+
+            <b> Step 2:</b> compute predicted value of \( \hat{y} \) for given a and b <br>
+
+
+            \begin{align}
+            \hat{y}=a_1*x_1+a_2*x_2.....a_k*x_k +b
+            \end{align}
+
+
+            <b> Step 3: </b> Compute Gradients <br>
+            \begin{align}
+            \partial a_k &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{ki})}{N} \\
+            \partial b &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-1)}{N} \\
+            \end{align}
+
+
+            <b> Step 4: </b> Apply gradient descent to update parameters <br>
+            \begin{align}
+            a_k&=a_k-\alpha * \partial a_k \\
+            b&=b-\alpha * \partial b
+            \end{align}
+            \( \alpha \) is the learning rate.
+    
+    </article>
+</div>
+{% endblock Question %}
+
+{% block code_template %}
+
+<div class="row m-3">
+    <div class="col-12" >
+        <textarea type="text" id="editor">
+from typing import List
+def get_x_y(n, k):
+    """
+    Function to generate data for model training
+    :param n: number of rows in data
+    :param k, number of features in independent variable
+    """
+    # Implement your logic here 
+
+    
+
+
+def initialize_parameter(K: int):
+    """
+    :param K: number of independent variables in training data
+    :return a , b: a is list of float with K elements and b is scalar float value 
+    """
+    # Implement your logic here 
+
+
+def make_predictions(X: List[List[float]], a: float, b: List[float])->List[float]:
+    """
+    Function to compute predicted values for given X values
+    :param X: list of N rows and each row has K features
+    :param a: list of float with K elements
+    :param b: float value
+    :return: list of predicted values
+    """
+    # Implement your logic here 
+
+def compute_gradient(X: List[List[float]], Y_True:List[float], Y_pred:List[float])->List[float]:
+    """
+    Compute Gradient of cost function with respect to parameters a and b.
+    :param X: list of N rows and each row has K features
+    :param Y_True: list of N elements , which denotes actual values of Y
+    :param Y_pred: list of N elements, which denotes predicted values of Y
+    :return d_b, d_a: where d_b denotes gradient w.r.t b , d_b is a sclar
+                    d_a gradient w.r.t a, d_a should be a list 
+    """
+    # Implement your logic here 
+
+def train(X: List[List[float]], Y_True:List[float], num_iteration, learning_rate):
+    """
+    Function to train Linear Regression model
+    :param X: list of N rows and each row has K features
+    :param Y_True: list of N elements , which denotes actual values of Y
+    :param num_iteration: number of time loop will run to train model parameters
+    :param learning_rate: learning rate step of the model
+    :return a , b: a is list of float with K elements and b is scalar float value
+                These values will be final trained values which will be used to make predictions
+    """
+
+    # Implement your logic here
+
+    # Initialize a and b
+
+    # loop through num_iteration
+        # compute predicted values
+
+        # compute gradient
+
+        # update gradient
+
+#X, y = get_x_y(10,2)
+## random test case
+print(train([[1,2]],[2], 100, 0.1))
+        </textarea>
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock code_template %}

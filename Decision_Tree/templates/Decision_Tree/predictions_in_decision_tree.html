@@ -1,0 +1,91 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Predictions in decision Tree {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Predictions in Decision Tree Model</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> How predicted scores are generated in decision tree for 
+                        <ul>
+                            <li> Classification Tree Model</li>
+                            <li> Regression Tree Model</li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <p>
+                    In our <a href="../../../Decision_Tree/overview.html">previous discussion </a>we have seen a brief overview on how a decision tree is created by choosing and splitting a
+                    variable. Before we look into the details of how a variable is chosen and split thresholds are selected, first let’s look
+                    at how the decision tree makes predictions for given data points.
+            </p>
+            <p>
+                <h4>Predictions in Classification Tree </h4>
+                For classification trees we can count how many
+                data points belong to the positive and negative class.
+                We can output probability for the positive class by dividing the count of positive class data points by total count in
+                the region. 
+                Below is the classification decision tree which we have seen in the 
+                <a href="../../../Decision_Tree/overview.html">previous discussion </a>.
+                {% load static %}
+                <div class="my-4">
+                    <img src={% static 'Decision_Tree/decision_tree_overview.png' %} class="img-fluid rounded float-centre" alt="decision tree">
+                </div>
+
+                There are three regions in this Tree. <br>
+                <b> Region 1</b> <br>
+                Count of default = 10 <br>
+                Count of non default =  1 <br>
+                Total count = 11 <br>
+                Predicted probability for default =  10/11 = 0.909 <br> 
+                This region has a very high probability for default class. <br>
+        
+                <b> Region 3</b> <br>
+                Count of default = 4 <br>
+                Count of non default =  0 <br>
+                Total count = 4 <br>
+                Predicted probability for default =  4/4 = 1 <br> 
+                This region has a very high probability for default class. <br>
+                <b> Region 2</b> <br>
+                Count of default = 2 <br>
+                Count of non default =  15 <br>
+                Total count = 17 <br>
+                Predicted probability for default =  2/17 = 0.117 <br> 
+                This region has a very low probability for default class. <br>
+
+            </p>
+            <p>
+                <h4> Predictions in Regression Tree</h4>
+                We can calculate the average value of all the data points present in the region. This value is considered as the
+                predicted value for the region.
+
+            </p>
+        </div>
+
+
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

@@ -1,0 +1,117 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Mathematics of KMeans {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Mathematical Details of KMeans Algorithm</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> How KMeans works</li>
+                    <li> How to decide number of clusters in the KMeans</li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <h5 class="text-black my-3"> KMeans detailed Steps</h5>
+            <p>
+                In this section we will look at the details of all the steps involved in K-Means clustering Algorithm. Let’s first
+                formulate the problem
+                We are given a data matrix of \( (N, M) \) size and our objective is to group data into \( K \) clusters. \( K \) is a
+                hyperparameter and the user needs to set \( K \) value before the algorithm begins.
+                
+                There are three Major steps involved in the algorithm
+            </p>
+
+            <p>
+                <ol>
+                    <li> 
+                        <strong> Initialization of Cluster Centroids </strong>
+                        <p>
+                            First of all, the algorithm initializes the K cluster centroids randomly. We can select K data points 
+                            randomly from the given data. We need to be a little bit careful while selecting the initial cluster centroids.
+                             Choice of Initial centroid may affect the quality for final clusters. While initializing the cluster centroids 
+                             we need to keep following things in mind
+                             <ul>
+                                 <li>
+                                    Make sure that K centroids are well separated. If the initially chosen  centroids are close to each 
+                                    other then final clusters may not be of good quality.
+                                 </li>
+                             </ul>
+                        </p>
+                    </li>
+                    After the initialization step KMeans consists of looping between step2 and step 3.
+
+                    <li>
+                        <strong> Cluster assignment step </strong>
+                        <p>
+                            This step assigns the cluster number to each of the data points. Algorithm calculates the 
+                            distance between the data point and each cluster centroid. Nearest cluster centroid id will 
+                            be assigned as cluster number to the data point.
+
+                        </p>
+                    </li>
+                    <li>
+                        <strong> Cluster centroid update step </strong>
+                        <p>
+                            Once all the data points are assigned to their respective clusters then the algorithm performs 
+                            an update step for cluster centroids. New cluster centroids are calculated by taking the mean of 
+                            features at  cluster level.
+                        </p>
+
+                    </li>
+                </ol>
+                Algorithm will keep repeating step 2 and step 3 until a stopping criteria is satisfied.  
+                Below are the some of the stopping criteria 
+                <ul>
+                    <li> We can run the algorithm for a fixed number of times.</li>
+                    <li> We can check if there is minimal change in the cluster centroid from the previous step. 
+                        We can calculate the euclidean distance between the new cluster centroid and previous 
+                        cluster centroids. If distance is less than some epsilon (0.00001) then stop the algorithm.
+                    </li>
+                    <li>
+                        We can also monitor cluster quality by calculating the WCSS metrics. 
+                        If improvement in the WCSS is less than some epsilon (0.00001) then we can stop the algorithm.
+                    </li>
+                </ul>
+
+            </p>
+        </div>
+        <div>
+            <h5 class="text-black my-3"> How to select Optimum Number of Clusters</h5>
+            <p>
+                In the K-Means algorithm, the number of clusters \( (K) \) is a hyper-parameter which we need to set 
+                before the training begins. In order to select the optimum value of \( K\) we try to minimize the metrics 
+                called WCSS(within cluster squared sum). We run KMeans algorithm with different numbers of clusters and plot 
+                the curve. Look at the below plot. We select the number of clusters in such a way that after that if we increase
+                 the number of clusters there will be a very small decrease in the WCSS. This method is called the elbow method.
+                  4 would be the optimum number of clusters as per below diagram. 
+
+            </p>
+        </div>
+
+            {% autoescape off %}
+             {{elbow_curve}}
+            {% endautoescape %}
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

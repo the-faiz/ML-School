@@ -1,0 +1,120 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Ensemble Model in Machine Learning {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Ensemble Model Overview</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Overview of Ensemble Models </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <p>
+                Before we begin to discuss the ensemble models, let’s first try to understand why we need ensemble
+                models? To understand
+                this we will first revisit the problem of overfitting(high variance) and underfitting(high bais).
+            </p>
+
+            <h4>
+                Underfitting
+            </h4>
+            <p>
+                It’s a situation when the model has not been trained enough. Model has higher training error as well as
+                higher
+                validation error. We call it a high bias and low variance problem. Left plot in diagram 1 shows the
+                underfitting
+                condition. Decision boundary is quite simple and not able to learn patterns present in the data and
+                hence training set
+                error itself will be quite high for such models.
+
+            </p>
+            <h4>
+                Overfitting
+            </h4>
+            <p>
+
+                It’s a situation when a model starts learning micro patterns present in the data. These micro patterns
+                may be because of noise. Model loses its generalisation capability. Model does a very good job in
+                training data but for validation and test data it will have high error. In this case the model shows low
+                error on the training set but higher error on validation set. This is called low bias high variance
+                problem. Right plot in diagram 1 shows the overfitting condition.
+
+            </p>
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'ensemble_model/overfitting_underfitting.png' %}
+                    class="img-fluid rounded float-centre" alt="Overfitting underfitting">
+            </div>
+            <p class="text-center"> Diagram 1:  Underfitting, Just right and Overfitting</p>
+        
+        </div>
+
+        <div>
+            There are various methods to solve the problem of overfitting and underfitting. Ensemble models also try to solve these
+            two problems. Some of the ensemble techniques are helpful in solving high variance problems(Bagging) while some of them
+            solves the high bias problem(boosting). We will discuss these techniques in detail later. <br>
+            
+            Basic idea behind ensemble models is instead of relying on a single model, train multiple models and make predictions by
+            combining all the models. Each model is called a weak learner. <br>
+            Diagram 2 explains the overview of the Ensemble model. We can train multiple models on the training dataset and then we
+            can make the final prediction by combining predictions from all the models. <br>
+       
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'ensemble_model/ensemble_model_overview.png' %}
+                    class="img-fluid rounded float-centre" alt="Overview of Ensemble Model">
+            </div>
+            <p class="text-center"> Diagram 2: Brief Overview of Ensemble Model  </p>
+        
+        </div>
+
+        <div>
+            <h4>
+                How Ensemble model makes final predictions
+            </h4>
+            <ul>
+                <li>
+                    <h6>
+                        Classification Model
+                    </h6>
+                    <p>
+                        We can use maximum voting techniques. We look at the predictions made by all models and the prediction which gets maximum votes is the final prediction.
+
+                    </p>
+                </li>
+                <li>
+                    <h6>
+                        Regression Model
+                    </h6>
+                    <p>
+                        We can take the average of all predictions made by individual models. 
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

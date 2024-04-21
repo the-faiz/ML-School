@@ -1,0 +1,129 @@
+
+
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Linear Regression with one variable {% endblock myTitle %} 
+{% block mainPage %} 
+<div class="card-body">
+    <h2 class="card-title my-3">Linear Regression with one variable</h2>
+    <article>
+
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Brief Overview of Linear Regression Model</li>
+                </ul>
+            </div>
+        </div>
+        <h4 class="text-secondary my-3">1. High Level Understanding</h4>
+        <p>
+            Linear Regression is a supervised learning algorithm, where the target/dependent variable is
+            of continuous type. House price prediction, total sales volume prediction etc are few
+            examples where linear regression can be used. In order to predict house price you need some
+            information which determines house price, we call them <strong class="text-dark">
+                features/independent</strong> variables. Some
+            of the example features could be area of house, number of rooms in house, age of the
+            building etc.
+        </p>
+        <p>
+            In this discussion we will try to understand Linear Regression with one variable therefore
+            we will take the number of rooms as an independent variable and house price as a dependent
+            variable. Let's look at our dataset which contains historical price information of houses.
+
+        </p>
+        <div>
+            <table class="table table-bordered border-success table-striped text-center table-sm">
+                <caption> Table 1 Number of rooms vs house price data, Note this is a dummy data
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">S.N.</th>
+                        <th scope="col">Number of Rooms</th>
+                        <th scope="col">House Price(USD) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>6</td>
+                        <td>17K</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>5</td>
+                        <td>12K</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>7</td>
+                        <td>30K</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>10</td>
+                        <td>35K</td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <h5 class="text-secondary my-3"> Goal of Linear Regression</h5>
+        <p>
+            We are given some data points (just like Table 1) Linear regression algorithm tries to fit a
+            line between independent variable ( no. of rooms) and dependent variable ( house price).
+            <br>
+            Below figure summarizes linear regression algorithm at a very high level. Green points are
+            the given datasets. On the x axis we have the number of rooms and on the y axis we have
+            house price.We can clearly see there is quite a good linear relationship between the two
+            variables. <strong class="text-dark">Goal of the Linear regression algorithm is to find the black fitted line as shown
+            in the plot.</strong>
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'LR_one_variable/House_price_for_high_level.png' %}
+                    class="img-fluid rounded float-centre" alt="house_price_for_high_level">
+            </div>
+        </p>
+
+
+        <p>
+            <h5 class="text-secondary my-3"> What will happen once you got the equation of line? </h5>
+
+            Let's assume that we have found the best fitted line ( we will talk about it in the next section
+            on how to drive this equation from data). Below is the equation of the fitted line.
+            \begin{align}
+            y=3.5*x -1.25
+            \end{align}
+            where \( y \) denote price of house and \( x \) denotes number of rooms. <br>
+            Now can you calculate the house price if we know the number of rooms in the house. Yes, just
+            insert \( x \) value into the equation. For a house with 2 rooms, its predicted price is
+            \( 5750(USD) \). <br>
+            <strong class="text-dark"> 
+                Once you get the equation of line you can calculate House price for any given number of rooms in the house.
+            </strong>
+
+       
+
+        </p>
+
+
+    </article>
+   
+</div> {% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->            
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

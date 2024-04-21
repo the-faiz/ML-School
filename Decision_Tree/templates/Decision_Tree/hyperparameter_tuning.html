@@ -1,0 +1,94 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Hyperparameter Tuning in decision Tree {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Important Hyperparameters in Decision Tree</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Detailed understanding of hyperparameters in Decision Tree</li>
+                    <li> What is Tree Pruning and Why is it necessary to have it?</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h4> Hyperparameter Tuning in decision tree </h4>
+            <p>
+                In this Section we will talk about important hyperparameters used in the decision tree algorithm. Decision tree models
+                are prone to overfitting and hence hyperparameter tuning is very important in tree based models. This discussion is
+                mostly inspired from scikit-learn documentation and for the full list of hyper-parameters readers can refer to this
+                <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">link.</a>
+                Below are some of the important hyperparameters.
+            </p>
+            <ul>
+                <li>
+                    <h5>max_depth</h5>
+                    <p>
+                        This is one of the most important hyperparameters. This indicates what is the maximum depth of the tree. Higher depth of
+                        the tree leads to more partitions in the data and eventually overfitting in the model. Very shallow ( low depth) tree
+                        may underfit the data therefore we need to select the right value for this hyperparameter to avoid problems in the
+                        model. <br>
+                        <b> Practical Tips : </b> 
+                        start your experiment with max_depth=3 and gradually increase the depth of the tree.
+                        <a href="https://scikit-learn.org/stable/modules/tree.html#tips-on-practical-use">link</a>
+                    </p>
+
+                </li>
+                <li>
+                    <h5>max_features</h5> 
+                    <p> 
+                        This indicates how many features will be used while searching the best feature and best threshold at each node of the
+                        tree. Subset of features is randomly selected from all of the features. Most commonly used value for this sqrt
+                        (n_features).
+                        For example if there are a total 16 features in the data then only 4 randomly selected features will be used for best
+                        feature and best threshold selection at each node of the tree. For more details look at the scikit-learn 
+                        <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">documentation.</a> <br>
+                        This parameter is very helpful in faster training of the model and prevents overfitting of the model.
+                    </p>
+
+                </li>
+                <li>
+                    <h5>min_samples_split</h5>
+                    <p>
+                        This indicates the minimum number of data points a node should have if we want to split it into child nodes. if nodes
+                        have fewer data points than this then that node will not be further split. This parameter controls the depth of the tree
+                        and hence helps in preventing the overfitting.
+                    </p>
+                </li>
+                <li>
+                    <h5> min_samples_leaf</h5>
+                    <p>
+                        if a node is split at any level then the child node should have at least this many data points in it, otherwise that
+                        split is discarded. This parameter also controls the depth of the tree.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                For more practical tips on setting the right value of hyperparameters for your experiments, readers can take a look at the scikit-learn documentation.
+                <a href="https://scikit-learn.org/stable/modules/tree.html#tips-on-practical-use">link</a>
+            </p>
+
+        
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

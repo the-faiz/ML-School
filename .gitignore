@@ -1,0 +1,5 @@
+__pycache__/
+/base_template/__pycache__/
+/base_template/migrations/__pycache__/
+env/
+*.sqlite3

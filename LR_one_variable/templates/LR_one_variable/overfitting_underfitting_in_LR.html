@@ -1,0 +1,151 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Mathematics for Linear Regression with one variable {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Overfitting in Linear Regression Model</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> We will explore overfitting and underfitting problems</li>
+                    <li> We will learn about regularization</li>
+                </ul>
+            </div>
+        </div>
+
+        <h4 class="text-secondary"> Learning Curve</h4> <br>
+        <p>
+            During model training we can monitor model performance (cost function/error/any metric of our interest) on
+            both train and validation data. In general it has been observed that training set error decreases as
+            training progresses but validation set may go up after a certain point and if this happens then you need to
+            be carefull. Below plot shows variation of error with number of iterations on training and validation data
+            sets. Three features are marked in this plot <br>
+            <br>
+            <strong>1. Underfitting </strong> <br>
+            when training set error and validation set errors are very high and they might be very close
+            to each other. This indicates the model has not gone through enough training. This is also called high bais.
+            <br>
+            <br>
+            <strong>2. Overfitting</strong> <br>
+            when training set error is small while validation set error is quite high then we call it
+            overfitting in the model. In this case the model lacks generalization capability, which means the model
+            works fine on training data set but it is not able to do well on unseen data (validation data). This is not
+            a good model and we will look at how to control overfitting in different cases. This is also called a high
+            variance problem. <br>
+            <br>
+            <strong>3. Just right</strong> <br>
+            At this point both training and validation set errors are close to each other as well as
+            cost function value is quite low. Which means the model works fine with both seen data(train data) as well
+            as unseen data (validation data). Ideally we would like to have low bias and low variance in the model but
+            in actual models we need to find a good trade off between bias and variance. <br>
+
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'LR_one_variable/overfitting_underfitting.png' %} class="img-fluid rounded float-centre"
+                    alt="overfitting-underfitting">
+            </div>
+
+            Whenever we end up underfitting or overfitting situations we deal with them differently. First we will try
+            to tackle Overfitting problem and subsequently we will try to understand more about the underfitting
+            problem.
+
+        </p>
+        <h4 class="text-secondary"> Regularization, A solution to overfitting problem</h4> <br>
+        <p>
+            
+            There are multiple ways to resolve overfitting issues in the model. One of the frequently used approach is,
+            Regularization. It imposes a penalty on parameters through cost function. we add an extra term to the cost
+            function.let's look at the new cost function. <br>
+            <br>
+            <strong> Cost function without regularization)</strong> <br>
+            \begin{align}
+            J(a_1,a_2...a_k,b)&=\frac{\sum_{i=1}^N \ (y_i-a_1*x_1-a_2*x_2......-a_k*x_k-b)^2}{2*N} \\ 
+            \end{align}
+            <br>
+            <br>
+            <strong> Cost function with \(L2\) regularization)</strong><br>
+            \begin{align}
+            J(a_1,a_2...a_k,b)&=\frac{\sum_{i=1}^N \ (y_i-a_1*x_1-a_2*x_2...-a_k*x_k-b)^2}{2*N} \ +
+            \frac{\lambda*(a_1^2+a_2^2...a_k^2)}{2*N} \\ 
+            \end{align}
+
+            \( \lambda \) is called the Regularization parameter. <br>
+
+            We generally do not regularize bias terms. This particular approach is called \(L2\) regularization. Similar
+            to this we have \(L1\) regularization. In this case we take absolute values of parameters instead of
+            squaring it. <br>
+            <br>
+            <strong> Cost function with \(L1\) regularization)</strong><br>
+            \begin{align}
+            J(a_1,a_2...a_k,b)&=\frac{\sum_{i=1}^N \ (y_i-a_1*x_1-a_2*x_2...-a_k*x_k-b)^2}{2*N} \ +
+            \frac{\lambda*(|a_1|+|a_2|...|a_k|)}{2*N} 
+            \end{align}
+
+            <strong>Question: Out of \( L1 ,L2 \) regularization which one is better and why ?</strong>
+                    <br>
+                    For now we will stick to \( L2 \) regularization, since cost function has been changed therefore
+                    gradient of cost function w.r.t parameters will also change.
+
+                    \begin{align}
+                    \partial a_1 &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{1i})}{N} \ + \frac{\lambda *a_1}{N}\\
+                    \partial a_2 &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{2i})}{N} \ + \frac{\lambda *a_2}{N} \\
+                    .\\
+                    .\\
+                    .\\
+                    \partial a_k &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{ki})}{N} \ + \frac{\lambda *a_k}{N} \\
+                    \partial b &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-b)}{N} \\
+                    \end{align}
+                    we can use these updated gradient values to perform the updates in the parameters.
+
+        </p>
+        <h4 class="text-secondary"> 
+            \( L2 \) Regularization is also called weight decay regularization
+        </h4> 
+        <br>
+
+        <p>
+            To understand this let's look at the gradient equation which we get after introducing the regularization term into the cost function.
+ 
+                \begin{align}
+                \partial a_1 &=\frac{\sum_{i=1}^N \ (y_i-\hat{y_i})*(-x_{1i})}{N} \ + \frac{\lambda *a_1}{N}\\
+                \end{align}
+                
+                If you look carefully at the right side of the equation, the first term is the gradient 
+                value without regularization. therefore we can write this equation like this
+                \begin{align}
+                \partial a_1=\partial a_1 (no \ reg) + \frac{\lambda *a_1}{N}
+                \end{align}
+                
+                
+                Now let's look at the parameter update equation
+                \begin{align}
+                a_1 &= a_1 - \alpha *\partial a_1 \\ a_1&=a_1-\alpha * \{ \partial a_1 (no \ reg) + \frac{\lambda *a_1}{N} \} \\
+                a_1&=a_1-\alpha * \partial a_1 ( no \ reg ) - \frac {\alpha * \lambda a_1} {N} \\ a_1 &= a_1 ( 1-\frac{\alpha * \lambda}{N}) -\alpha * \partial a_1(no \ reg )
+                \end{align}
+                
+                Now look at the first term on the right hand side, there is small decay 
+                before the actual update happens. Because of this first term \( L2\) regularization is 
+                called weight decay regularization.
+
+        </p>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Train-val-test data split</a>
+    </li>
+    <li>
+        <a href="#">L1 & L2 Regularization</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

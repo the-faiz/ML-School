@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML School : One Stop Solution for Learning ML </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static './home_page.css' %}">
+    <link rel="stylesheet" href="{% static './footer.css' %}">
+</head>
+<body>
+    {% include 'base_template/navbar.html' %}
+    <div class="cont">
+        <h1 class="mx-3 my-5 cont2head "><u>Prepare your ML Interview</u></h1>
+        <div class="cont2">
+            <div class="card1 ml ">
+                <button class="btn btn-danger hovershow"><a href="/logistic_regression">Start Now</a></button>
+                <h3 class='hovernotshow'>ML Theory</h3>
+                <p class='hovernotshow'>100 Problems and 30 Articles </p>
+            </div>
+            <div class="card1 pns">
+                <button class="btn btn-danger hovershow"><a href="/practice_prob">Start Now</a></button>
+                <h3 class='hovernotshow'>Probability Practice</h3>
+                <p class='hovernotshow'>50 Problems and 10 Articles</p>
+            </div>
+            <div class="card1 ds">
+                <button class="btn btn-danger hovershow"><a href="/map">Start Now</a></button>
+                <h3 class='hovernotshow'>ML Practice</h3>
+                <p class='hovernotshow'>100 Problems and 9 Articles</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        {% include 'base_template/footer.html' %}
+        <script src="https://kit.fontawesome.com/09e251de9b.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

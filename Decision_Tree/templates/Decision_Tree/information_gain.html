@@ -1,0 +1,146 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Information Gain in Decision Tree {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Information Gain in Decision Tree</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> what is information gain </li>
+                    <li> 
+                        How decision Tree determines 
+                        <ul>
+                            
+                            <li> Which Variable we should use for split</li>
+                            <li> At what threshold we should split the variable</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        <div>
+            <p>
+                In the previous section we have talked about how to calculate the node purity for classification and regression trees.
+                But there are two important questions that we have not addressed yet
+                <ul>
+                    <li>
+                        How Does algorithm decide which variable is to be selected for split 
+                    </li>
+                    <li>
+                        How does algorithm decide threshold for the variable split 
+                    </li>
+                </ul>
+                In this section We will discuss <b>information gain </b> which will help us to understand above two questions.
+            </p>
+        </div>
+        <div>
+            <p>
+                <h4>Information Gain</h4>
+                As we have discussed, the decision tree splits data in such a way that partitioned data becomes more homogeneous.
+                Whenever the algorithm splits a variable at any threshold then information gain tells us whether after partitioning data
+                has become more homogeneous or not. If data has become more homogeneous then that split is acceptable otherwise we
+                reject the split and try to split with another threshold. <br>
+                Information gain is nothing but the difference between Node purity after split and Node purity before split.
+
+            </p>
+            <p>
+                <h5> Calculation of Information Gain</h5>
+                Consider an example tree shown below diagram, assume this is the current state of the tree.  
+                {% load static %}
+                <div class="my-4">
+                    <img src={% static 'Decision_Tree/information_gain.png' %}
+                        class="img-fluid rounded float-centre" alt="information gain calculation">
+                </div> 
+                The root node has p positive class and q negative class data points, we can calculate root node purity either by entropy
+                or by gini, we can use any metric of our choice. Let's call it G(root). This will be the impurity before the split. <br>
+            </p>
+            <p>
+                <ul>
+                    <li>
+                        <h5> Impurity before split</h5> 
+                        Total number of data points = n <br>
+                        Count of positive class = p <br>
+                        Count of negative class = q  <br>
+                        \( p_0 \)(probability for class 0)= q/n <br>
+                       \( p_1 \) (probability for class 1)= p/n  <br>
+                       \( \text{Entropy}_{\text{befor split}} = -p_0 * log (p_0) - p_1*log(p_1) \)
+                        
+                    </li>
+                        <br>
+                    <li>
+                        <h5>Impurity after split</h5>
+                        Now we split the given variable at the given threshold  and it will create sub-regions left and right. 
+                        Inorder to calculate impurity after split we need to calculate impurity for left and child nodes and 
+                        then take the weighted average of two impurities. <br>
+
+                        <ul>
+                            <li>
+                                <h6>Entropy for left child node</h6>
+                                Total number of data points = \( n_1 \) <br>
+                                Count of positive class = \(p_1 \) <br>
+                                Count of negative class =\( q_1 \) <br>
+                                \( p_0 \)(probability for class 0)= \( \frac{q_1}{n_1} \) <br>
+                            \( p_1 \) (probability for class 1)= \( \frac{p_1}{n_1} \)  <br>
+                            \( \text{Entropy}_{\text{left}} = -p_0 * log (p_0) - p_1*log(p_1) \)
+
+                            </li>
+                                <br>
+                            <li>
+                                <h6>Entropy for right child node</h6>
+                                Total number of data points = \( n_2 \) <br>
+                                Count of positive class = \(p_2 \) <br>
+                                Count of negative class =\( q_2 \) <br>
+                                \( p_0 \)(probability for class 0)= \( \frac{q_2}{n_2} \) <br>
+                            \( p_1 \) (probability for class 1)= \( \frac{p_2}{n_2} \)  <br>
+                            \( \text{Entropy}_{\text{right}} = -p_0 * log (p_0) - p_1*log(p_1) \)
+
+                            </li>
+                        </ul>
+                        <br>
+                        Entropy after split is calculated by weighted average of entropies of left and right child nodes. <br>
+                        <br>
+                        Weight for left child \( (w_{\text{left}}) = \frac{n_1}{n_1+n_2}\) <br>
+                        Weight for left child \( (w_{\text{right}}) = \frac{n_2}{n_1+n_2}\) <br>
+                        <br>
+                       \(\text{Entropy}_{\text{after split}} =  w_{\text{left}}* \text{entropy}_{\text{left}} + w_{\text{right}}* \text{entropy}_{\text{right}} \) <br>
+
+                    </li>
+                </ul>
+                \( \text{Information gain} = \frac{n}{N_{total}}* (\text{Entropy}_{ \text{after split}} - \text{Entropy}_{\text{ before split}}) \) <br>
+                \(N_{total} = \) Total number of data points in full data set
+
+            </p>
+            <p>
+                We have explained the calculation of information gain by calculating impurity using entropy. We can also use Gini
+                Impurity to calculate the information gain for classification trees. For regression trees we can replace Entropy/Gini
+                with variance and the rest of the calculations remain same.
+
+            </p>
+
+            
+        
+        </div>
+        
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

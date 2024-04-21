@@ -1,0 +1,128 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Random Forest Overview {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Random Forest : What kind of problems random forest solves</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Why do we need Random Forest Algorithm </li>
+            
+                </ul>
+            </div>
+        </div>
+        <div>
+            <P>
+                Before we deep dive into the ensemble model, I would like to talk about the Learning Curve.
+                It is a plot of training and validation set error with the number of training steps. This plot tells us how training and
+                validation set error changes as training progresses. <br>
+                
+                We will break it down into three regions, look at diagram 1. 
+
+            </P>
+            <p>
+                <ul>
+                    <li>
+                        <h5>
+                            Region A : Underfitting Region
+                        </h5>
+                        <p>
+                            This is the beginning of the training. Since training just started we will get High training set error and a high
+                            validation set error, but the interesting thing is training error and validation error are very high and close to each
+                            other. This is called High Bias ( because of poor training it has high error) low variance ( training and validation
+                            error are close to each other). This particular situation is also called <b> underfitting.</b>
+
+                        </p>
+                    </li>
+                    <li>
+                        <h5>
+                            Region C : Overfitting Region
+                        </h5>
+                        <p>
+                            Algorithm has gone through several training steps. Algorithm starts fitting to the noise present in the training
+                            dataset. And hence the generalisation power of the algorithm goes down therefore when we evaluate its performance on the
+                            validation set it gives high error. This particular situation is called <b>overfitting.</b> This is also known as the low bias
+                            ( low training error) and high variance ( training and validation set errors are very different) problem.
+
+                        </p>
+                    </li>
+                    <li>
+                        <h5>
+                            Region B : Just Right
+                        </h5>
+                        <p>
+                            This region has low training error and low validation error. This is what we want, Training Algorithm fits on training
+                            data well and have good generalisation power.
+
+                        </p>
+                    </li>
+                </ul>
+            </p>
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'random_forest/learning_curve.png' %}
+                    class="img-fluid rounded float-centre" alt="Learning Curve in Machine Learning">
+            </div>
+            <p class="text-center"> Diagram 1: Learning Curve </p>
+
+        </div>
+
+        <div>
+            <b>
+                Now let’s understand what kind of problems a decision tree model may suffer and how to rectify it.
+
+            </b> 
+            <br>
+            <br>
+            <h5> Overfitting Problem with Decision Tree Model</h5>
+            <p>
+                Decision trees are prone to overfitting. Which means it may try to make correct predictions for noisy data and lose its
+                generalisation capability. <br>
+                why? <br>
+                Each leaf Node in the Decision tree represents a data partition. More leaf nodes means more partitions and the Decision
+                tree makes a separate prediction for each of the partitions. As Number of partitions increases Decision tree starts
+                overfitting the training data and when tested on validation data it shows high error.
+
+
+            </p> 
+            <p>
+                <h5>
+                    How to prevent overfitting in Decision Tree
+                </h5>
+                Depth of the tree is one of the important hyper-parameters in decision trees. Proper hyper-parameter tuning can resolve
+                overfitting. Detailed hyperparameter tuning can be found 
+                <a href="../../../Decision_Tree/hyperparameter_tuning.html"> here. </a> 
+                <br> 
+                <br>
+                Another way of solving the overfitting problem in Decision Tree is to use 
+                <a href="../../../ensemble_model/overview.html"> ensemble models. </a>
+                There are various techniques that can be implemented as part of ensemble models. 
+                <a href="../../../ensemble_model/bagging.html">  Bagging</a>
+                 is one such technique. Random
+                forest is also an ensemble method which is very similar to bagging technique. Random forest solves the problem of
+                overfitting in the decision tree algorithm.
+
+            </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

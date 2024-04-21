@@ -1,0 +1,135 @@
+{% extends '../base_template/base_code_editor.html' %}
+<!-- add a base template for code editor -->
+{% csrf_token %}
+{% block myTitle %} {{page_title}} {% endblock myTitle %}
+{% block mainPage %}
+
+<div class="cont">
+    <div class="left">
+        {% comment %} Question block {% endcomment %}
+        <div class="rounded p-2 question">
+            <h1>{% block questionTitle %} {{question_title}} {% endblock questionTitle %}</h1>
+            <article> {% block questionDescription %} {{question_description}} {% endblock questionDescription %}
+            </article>
+
+            <div> {{input}}</div>
+            <div>{{output}}</div>
+        </div>
+    </div>
+    <div class="right">
+
+        {% comment %} Lang Block {% endcomment %}
+        <div class="right_top">
+            <div class="bg-light rounded p-1 right_top_inside">
+                <div class="col-12 w-25">
+                    <select class="form-select" id="inlineFormSelectPref">
+                        <option selected value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="C++">C++</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        {% comment %} Solution Block {% endcomment %}
+        <div class="right_bottom">
+            <div class="right_bottom_inside">
+                <textarea type="text" class="sol" id="editor">{{python_code}}</textarea>
+            </div>
+        </div>
+
+        <div class="testcase my-2">
+            <button type="button" id="run" class="btn btn-success" title="Run Code"><i
+                class="bi bi-play-fill">RUN</i></button>
+        </div>
+
+        {% comment %} Output Block {% endcomment %}
+            <div class="bg-light output my-2" id="output" >
+            </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- Main java script code -->
+<script>
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        mode: {
+            name: "python",
+            version: 3,
+            singleLineStringErrors: false
+        },
+        theme: "dracula",
+        lineNumbers: true,
+        autoCloseBrackets: true,
+        indentUnit: 4
+
+    })
+    // var width = window.innerHeight
+    var option = document.getElementById("inlineFormSelectPref")
+    //  check if there is any other way to set height of the code editor
+    editor.setSize('', "500")
+    var run = document.getElementById("run")
+
+
+
+    option.addEventListener("change", function () {
+        if (option.value == "Java") {
+            editor.setOption("mode", "text/x-java")
+        }
+        else if (option.value == "Python") {
+            editor.setOption("mode", {
+                name: "python",
+                version: 3,
+                singleLineStringErrors: false
+            })
+
+        }
+        else if (option.value == "C++") {
+            editor.setOption("mode", "text/x-c++src")
+        }
+    })
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var code;
+    var csrftoken = getCookie('csrftoken');
+    run.addEventListener("click", function () {
+        code = {
+            code: editor.getValue(),
+            lang: option.value
+        }
+        console.log(code)
+        fetch("/code_editor/code_output", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            },
+            body: JSON.stringify(code)
+        }).then(response => response.text())
+            .then(output => {
+                document.getElementById("output").innerText = output;
+            })
+            .catch(error => console.error('Error:', error));
+    })
+</script>
+
+
+{% endblock mainPage %}

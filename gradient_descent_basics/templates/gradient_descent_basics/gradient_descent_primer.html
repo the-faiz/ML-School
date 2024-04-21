@@ -1,0 +1,190 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Gradient Descent Primer {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Optimization Algorithm: A Primer on Gradient Descent</h2>
+    <article>
+
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> We will explore a simple Minimization problem and solve it using gradient Descent</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <h4 class="text-secondary my-3"> A Simple Minimization Problem </h4>
+        <div>
+            <p>
+                Let's look at one of the mathematical functions and try to find its minima point <br>
+
+                Consider a quadratic function \( y=(z-2)^2 \) <br>
+
+                How can we calculate the point of minima for the above function? <br>
+               <strong> add a diagram here</strong> <br>
+
+            <p>
+                <strong> A simple Solution</strong> <br>
+            </p>
+
+            We can differentiate the function w.r.t \( z \) and set derivative = 0, it will give us a point where
+            function value will be minimum <br>
+            \begin{align}
+            \frac{\partial y}{\partial z} &= 0 \\
+            2*(z-2) &= 0 \\
+            z &= 2
+            \end{align}
+            \( z = 2 \) is point of minima
+
+            </p>
+            <p>
+                This kind of approach works for simple functions. Sometimes objective functions are very complex. They
+                may have many parameters then it becomes difficult to apply this method to find the minima of the
+                function. One example of such a complex function could be Squared error cost function.
+                \begin{align}
+                J(a1,b) = \frac{1}{2*N}*\sum_{i=1}^N( y_i-a1*x_i-b)^2
+                \end{align}
+                <br>
+                This function has two parameters \( a_1,\ b \). Finding the derivative and setting it to 0 will not work
+                for this function. why?
+
+            </p>
+            <p>
+                <strong>
+                    Is there any Other way which works for both simple and complex
+                    functions?
+                    <br>YES!! Gradient Descent is the answer.
+                </strong>
+            </p>
+        </div>
+        <h4 class="text-secondary my-3"> Gradient Descent </h4>
+        <div>
+            <p>
+                Gradient Descent is an optimization algorithm which is used to find the point of minima of any convex
+                function. It works in iterative fashion and in each iteration it takes a step toward the minimum point.
+                Algorithm has four major steps
+            </p>
+            <p>
+            <ol>
+                <li>
+                    <strong>Define the objective function which we want to minimise and identify what are the parameters
+                        present
+                        in the objective function.</strong> <br>
+                    We can take \( y = (z-2)^2 \) as an objective function which we want to minimise w.r.t parameter
+                    \(z\).
+                    This means we would like to find the value of \( z \) such that the function value is minimum.
+                    <br>
+                    <br>
+                </li>
+                <li>
+                    <strong>Initialise parameter values to some initial values.</strong> <br>
+                    Let’s say we set \( z = 0 \). we can choose any initial values.
+                    <br>
+                    <br>
+                </li>
+                <li>
+                    <strong>Calculate the gradient of objective function w.r.t each of the parameters.</strong> <br>
+                    <br>
+                    \begin{align}
+                    \frac{\partial y}{\partial z} = 2*(z-2) <br>
+                    \end{align}
+                    <br>
+                    At \(z = 0 \) gradient is -4 <br>
+                    At \(z = 1 \) gradient is -2 <br>
+                    Similary we can calculate gradient value at any give \( z \)
+
+                    <br>
+                    <br>
+                </li>
+                <li>
+                    <strong> Perform update of parameter values </strong><br>
+                    This is the main step in the gradient descent. We can use gradient values of function to update each
+                    of the parameters. We can use the below equation to perform the update of parameters.
+
+                    \begin{align}
+                    z=z-\alpha*\frac{\partial y}{\partial z}
+                    \end{align}
+                    <p>
+                        \( \alpha \) is the learning rate. This controls the step size when we are performing the update
+                        step. This is a user provided parameter. We can set it to any value. We will talk about learning
+                        rate and how to select appropriate learning rate in the next section.
+                        <br>
+                        Let’s say we set \( \alpha = .01 \), the initial value of \( z = 0\). <br>
+                        Let’s run a few iterations of gradient descent. <br>
+                        <br>
+                        Iteration 1 <br>
+                        Initial value of \(z = 0 \) <br>
+                        Gradient of cost function at \(z = 0\) is \( 2*(z-2) \) = -4 <br>
+                        Now apply the update equation <br>
+                        \begin{align}
+                        z &= z - \alpha * gradient \\
+                        z &= 0 - .1 * (-4) \\
+                        z &=.4
+                        \end{align}
+                        After iteration 1 value of \(z \) becomes .4.
+                        <br>
+                        <br>
+                        Iteration 2 <br>
+                        Initial value of \(z = .4 \) <br>
+                        Gradient of cost function at \(z = .4\) is \( 2*(z-2) \) = -3.2 <br>
+                        Now apply the update equation <br>
+
+                        \begin{align}
+                        z &= z - \alpha * gradient \\
+                        z &= .4 - .1 * (-3.2) \\
+                        z &=.08
+                        \end{align}
+                        After iteration 2 the value of \(z\) becomes .08.
+                        <br>
+                        <br>
+
+                    </p>
+
+                </li>
+                <li>
+                    <strong id="StoppingCriteria"> Repeat Step 3 & 4 untill convergance </strong>
+                    This means we keep repeating steps 3 and 4 until the stopping criteria is satisfied. Some of the
+                    frequently used stopping criterion <br>
+                    1. Run loop for a fixed number of times. <br>
+                    2. Observe change in cost function value if change in cost function values is not significant then
+                    stop
+                    the loop.<br>
+                    Cost function value at current step - cost function value at previous step &lt epsilon <br>
+                    epsilon can be selected as \( 10^-6 \).
+
+
+
+                </li>
+            </ol>
+            </p>
+
+            <h4>Summary of this Lesson</h4>
+            We have looked at a convex cost function and tried to find the minimum point using gradient descent.
+            <br>
+            In the Next section Let’s code the gradient descent from scratch.
+
+        </div>
+
+
+    </article>
+
+</div> {% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Supervised Learning</a>
+    </li>
+    <li>
+        <a href="#">Dependent Variable</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

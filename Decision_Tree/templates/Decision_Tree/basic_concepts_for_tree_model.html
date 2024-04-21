@@ -1,0 +1,225 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Decision Tree basic concepts {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Basic concepts for Decision Tree</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> What do we mean by node purity in decision tree </li>
+                    <li> 
+                        How to calculate node purity for Classification tree using
+                        <ul>
+                            <li>Entropy</li>
+                            <li> Gini Impurity</li>
+                        </ul>
+
+                    </li>
+                    <li> How to calculate node purity for Regression tree using
+                        <ul>
+                            <li> Variance</li>
+                        </ul>
+                    </li>
+                    <li> What is information gain in Decision Tree</li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <p>
+                Decision Tree uses a recursive partitioning algorithm which splits data into different regions. It splits data in such a
+                way that data becomes more and more homogeneous after the split. Higher the purity of the data after the split, better
+                is the decision split.
+                This we have already seen in our example how after each split regions become more and more homogenous. There is one
+                major question, <b>How the decision tree determines the homogeneity or purity of the region ?</b>
+            </p>
+            <p>
+                In this section we will discuss some of the Basic foundations that are required to understand detailed working of
+                decision trees. <br>
+                
+                Decision trees work for both classification and regression trees. There are different ways to calculate Node purity for
+                two types of problems.
+            </p>
+            <p>
+                <h4>Node purity in Classification Tree</h4>
+                Classification problems have discrete dependent variables. The Algorithm splits data in such a way that after split, at
+                least one of the newly created regions has the majority of data points from the same class. Each split in the decision
+                tree tries to separate positive & negative class data points. There are various ways to calculate the homogeneity or
+                purity of a region for classification problem, below are some of the commonly used used ways.
+                
+                <ul>
+                    <br>
+                    <li>
+                        <h4> Entropy</h4>
+                        <p>
+                            Entropy represents randomness of the node. If a Region has almost equal number of positive & negative class examples it
+                            is said to have high entropy(less purer). On the other hand if a Region has one of the classes in majority then it is
+                            said to have low entropy (more purer). Mathematical equation of entropy is shown below
+                            <div style="font-family: MathJax_Main;">
+                                \begin{align}
+                                \text{entropy} = - \sum_{i=1}^k p_i * \log(p_i)
+                                \end{align}
+                                \( p_i \) is predicted probability of class i <br>
+                                 \( k \) denotes number of classes.
+                            </div>
+                            For binary class ( two class problem) entropy equation gets reduced to 
+                            <div style="font-family: MathJax_Main;">
+                                \begin{align}
+                                \text{entropy} = - p_0*\log(p_0) - p_1*\log(p_1)
+                                \end{align}
+                                \( p_0 \) is predicted probability of class 0 <br>
+                                 \( p_1 \) is predicted probability of class 1
+                            </div>
+                            <br>
+                            <b>How do we calculate the predicted probability of class in the region?</b>
+                            <br>
+                            We can count the number of data points for each class and then calculate the probability of the class.
+                            <a href="../../../Decision_Tree/predictions_in_decision_tree.html">[see this for more details]</a>
+
+                        </p>
+                        <p>
+                            <b>Entropy Calculation Example</b> <br>
+                            Consider a binary class problem with the following cases.
+                            <ul>
+                                <li>
+                                    <h6>Case 1 </h6>
+                                    Positive class count = 10 <br>
+                                    Negative class count = 10 <br> 
+                                    
+                                    <div style="font-family: MathJax_Main;">
+                                        \( p_0 \) (predicted probability of class 0) = 10/20 = 0.5  <br>
+                                        \( p_1 \) (predicted probability of class 1) = 10/20 = 0.5  <br>
+                                        \begin{align}
+                                        \text{entropy} &= -0.5*\log(0.5)-0.5*\log(0.5)
+                                        \\
+                                        \text{entropy} &= 0.693
+                                        \end{align}
+                                        
+                                    </div>
+                                    We have an equal number of positive and negative class data points. Which means this region is not homogeneous and we
+                                    have high entropy. This is the maximum entropy which we can get in a binary class problem.
+
+                                </li>
+                                <li>
+                                    <h6>Case 2 </h6>
+                                    Positive class count = 1 <br>
+                                    Negative class count = 19 <br> 
+                                    
+                                    <div style="font-family: MathJax_Main;">
+                                        \( p_0 \) (predicted probability of class 0) = 19/20   <br>
+                                        \( p_1 \) (predicted probability of class 1) = 1/20   <br>
+                                        
+                                        \begin{align}
+                                        \text{entropy} &= -\frac{19}{20}*\log(\frac{19}{20}) -\frac{1}{20}*\log(\frac{1}{20})
+                                        \\
+                                        \text{entropy} &= 0.198
+                                        \end{align}
+                                        
+                                    </div>    
+                                   
+                                Now we have the majority of negative classes and we are getting low entropy. Lower entropy indicates homogeneous(purer)
+                                data.
+                                </li>
+                                <li>
+                                    <h6>Case 3 </h6>
+                                    Positive class count = 19 <br>
+                                    Negative class count = 1 <br> 
+                                    
+                                    <div style="font-family: MathJax_Main;">
+                                        \( p_0 \) (predicted probability of class 0) = 1/20   <br>
+                                        \( p_1 \) (predicted probability of class 1) = 19/20   <br>
+                                        \begin{align}
+                                        \text{entropy} &= -\frac{1}{20}*\log(\frac{1}{20}) -\frac{19}{20}*\log(\frac{19}{20}) 
+                                        \\
+                                        \text{entropy} &= 0.198
+                                        \end{align}
+                                        
+                                    </div>
+                                    
+                                    This case is just opposite of case 2 and we have the same entropy value.
+                                </li>
+                            </ul>
+
+                        </p>
+                        <p>
+                            <b>Entropy does not depend on class type. If a node has a majority of data points belonging to one class ( either positive
+                            or negative ) then we will get low entropy value. Case 2 and 3 are opposite of each other and we have same entropy in
+                            both cases. </b> <br>
+                            <br>
+                            <br>
+
+                            Below is the entropy vs probability of positive class plot. This plot is symmetric about black line ( probability = 0.5
+                            ). Left region( green) has a low probability of class=1 which means the probability for class = 0 is high. Similarly for
+                            the right region(red), it has high probability for class = 1 therefore low probability for class = 0.
+
+                            {% autoescape off %}
+                            {{entropy_plot}}
+                            {% endautoescape %}
+
+                        </p>
+                    </li>
+
+                    <li>
+                        <h4>Gini Impurity</h4>
+                        <p>
+                            Gini is another way of calculating the purity of nodes. Below is the mathematical equation for the same
+                            <div style="font-family: MathJax_Main;">
+                                \begin{align}
+                                \text{Gini} &= 1-\sum_{i=1}^k p_i^2
+                                \end{align}
+                                \( p_i \) is predicted probability of class i <br>
+                                 \( k \) is number of classes <br>
+                            </div>
+                            Gini lies in [0,0.5] for binary class. Lower Gini indicates more homogeneous data while higher Gini value indicates more
+                            randomness. Below plot shows the variation of Gini with positive class probability, just like entropy plot this is also
+                            symmetric plot.
+                            {% autoescape off %}
+                            {{gini_plot}}
+                            {% endautoescape %}
+                        </p>
+
+                    </li>
+                </ul>
+            </p>
+            <p>
+                <h4>Node Purity in Regression Tree </h4>
+                In case of regression tree Node purity is calculated by squared error between the actual value and the predicted value.
+                Since the predicted value in a region is the average value of all the data points in that region therefore it is
+                equivalent to variance of data points in the region.
+                <div style="font-family: MathJax_Main;">
+                    \begin{align}
+                    \text{Node Purity} &= \text{average value of} (y_{actual}-y_{predicted})^2 
+                    \\ 
+                    \\
+                    y_{predicted} &= \bar{y} \ \text{(average value in the region)} 
+                    \\
+                    \\
+                    \text{Node Purity} &= \text{average value of} (y_{actual}-\bar{y})^2 = \text{variance }
+                    \end{align}
+                </div>
+                Lower the variance of data points in a region means data points are similar to each other.
+            </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">Recursive partitioning</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

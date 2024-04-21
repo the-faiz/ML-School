@@ -1,0 +1,143 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Decision Tree Algorithm {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3">Overview of Decision Tree Model</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> An Overview of Decision Tree Model </li>
+                    <li> An example which explain how decision tree works</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h4>Introduction</h4>
+            <p>
+                Decision Tree is one of the supervised learning algorithms which works for both classification and regression tasks. We
+                have already seen linear regression for regression task and logistic regression for classification tasks. Then why do we
+                need another algorithm to solve regression and classification problems? <br>
+                Linear regression and logistic regression are quite simple algorithms and they can learn linear patterns in the data and
+                these algorithms are not effective when there are non-linear patterns present in the data. That is why we need
+                algorithms which can effectively identify non linear patterns in the data. <br>
+                Decision tree is one of the algorithms which can learn non linear patterns in the data. Algorithm tries to partition
+                data into segments such that the partitioned segment becomes more and more homogeneous. Majority of data points in a
+                partition are similar to each other. <br>
+                Consider an example, we are trying to predict whether a customer will default on its loan or not, based on income and
+                risk score of the customer. We have plotted a scatter plot using the risk score and income of individuals in figure
+                1. <b class="text-success"> green</b> colour indicates customers who <b class="text-success"> did not default (good customers)</b> 
+                while <b class="text-warning"> orange</b> colour indicates customers who
+                <b class="text-warning"> defaulted (bad customers) </b> on their loan. <br>
+                Clearly we can not separate orange points and green points using only one linear boundary, hence separating boundary is
+                non linear. <br>
+
+            </p>
+            {% autoescape off %}
+            {{overview_plot_Decision_tree}}
+            {% endautoescape %}
+
+            <p>
+                In order to segregate good and bad customers we can Draw decision boundaries by choosing a variable and then splitting
+                the selected variable on a certain threshold. <br>
+                In our example we will first split on the income variable and then we will split using the risk variable. There are two
+                major questions here
+                <ol>
+                    <li>
+                        Which variable should we select for split ?
+                    </li>
+                    <li>
+                        How do we choose the split threshold ?
+                    </li>
+                </ol>
+
+                We will explore these questions in the later part of the discussion <a href="#"> (add link).</a> 
+                For now we will see how splitting the
+                feature space will make our data more and more homogenous. This way we will also cover a very high level overview of
+                working of the decision tree algorithm.
+            </p>
+            <p>
+                <h5>Split 1 : is income >=14.5</h5>
+
+                Black line represents the boundary line (income =14.5). Region below the boundary line (red region) has become
+                homogeneous, this region has the majority of customers who defaulted on their loan.  <br>
+                Region above the boundary line (
+                green region) is still non-homogeneous and contains both positive and negative class data points. This region needs to
+                be further split.
+                {% autoescape off %}
+                {{split_one_plot_dt}}
+                {% endautoescape %}
+
+
+            </p>
+            <p>
+                <h5>Split 2: Given income >=14.5, is risk_score &lt 95 </h5>
+                Green region contains a mixture of both positive and negative class data points. Therefore we have split it into the
+                third region (light blue). Blue line is the boundary line ( risk_score = 95). <br>
+                {% autoescape off %}
+                {{split_two_plot_dt}}
+                {% endautoescape %}
+
+            </p>
+            <p>
+                Now we have a total of three regions and each region has become homogeneous. We can calculate the probability of default
+                in each region.
+                <ul>
+                    <li>
+                            <b> Region 1 : income &lt 14.5 (Red Region)</b> <br>
+                    
+                            10 orange points(default) , 1 green point ( non default)<br>
+                            \( p(\text{default}) = \frac{10}{11}\)
+                            
+                    </li>
+                    <br>
+                    <li>
+                        <b>Region 2 : income >=14.5 and risk_score &lt 95 (Green Region)</b> <br>
+                
+                        2 orange points, 15 green points <br>
+                        \( p(\text{default}) = \frac{2}{17}\)
+                        
+                    </li>
+                    <br>
+                    <li>
+                        <b>Region 3 : income >=14.5 and risk_score>=95 (Blue Region)</b> <br>
+                        <br>
+                        4 orange points, 0 green points <br>
+                        \( p(\text{default}) = \frac{4}{4}\) <br>
+                        
+                    </li>
+                </ul>
+       
+            </p>
+            <p>
+                <h4> Construction of final decision tree </h4>
+                We have divided our feature space into three regions by splitting the variables on a certain threshold. With all this
+                information we can construct a decision tree which is shown in below figure. Each region is represented as leaf nodes in the
+                decision tree.
+            </p>
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'Decision_Tree/decision_tree_overview.png' %} class="img-fluid rounded float-centre" alt="decision tree">
+            </div>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}

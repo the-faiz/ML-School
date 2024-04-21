@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Ojuju:wght@200..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+}
+
+h1{
+    text-align: center;
+}
+
+.cont2{
+    display: flex;
+    /* justify-content: space-between; */
+    margin:10px 0 10px 0;
+}
+
+.cont2 .card1{
+    margin: 10px;
+    border:1px solid black;
+    width:20rem;
+    height:13rem;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center; 
+    transition: transform 0.3s ease-in-out;
+}
+
+.card1:hover{
+    transform: scale(1.01);
+    box-shadow: 1px 1px 1px 1px;
+    justify-content: center;
+    .hovernotshow{
+        display: none;
+    }
+    .hovershow{
+        display: flex;
+    }
+}
+
+
+.card1 h3{
+    color:white;
+}
+
+.card1 .pnumber h2{
+    color:white;
+}
+
+
+
+.card1 p{
+    color:white;
+}
+
+.hovershow{
+    display: none;
+}
+
+.ml{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://tse1.mm.bing.net/th?id=OIP.o_6JgefvY9kvnK54xjZf3gHaES&pid=Api&P=0&h=220') center/cover;
+}
+
+.pns{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://tse3.mm.bing.net/th?id=OIP.nWTDR0AI_gE9S1V0ZjjauwHaE8&pid=Api&P=0&h=220') center/cover;
+}
+.ds{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://tse4.mm.bing.net/th?id=OIP.6Mr3gsvnSeiHNGyQ3EanhAHaEK&pid=Api&P=0&h=220') center/cover;
+}
+.sm{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://tse4.mm.bing.net/th?id=OIP.Sq5_tKkbYCwLdz_Fv2MiIgHaEK&pid=Api&P=0&h=220') center/cover;
+}
+
+

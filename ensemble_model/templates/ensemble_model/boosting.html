@@ -1,0 +1,92 @@
+{% extends '../base_template/base_ML_course.html' %}
+{% csrf_token %}
+{% block myTitle %} Boosting Model {% endblock myTitle %}
+{% block mainPage %}
+<div class="card-body">
+    <h2 class="card-title my-3"> Boosting , Ensemble Model</h2>
+
+    <article>
+        <div class="card bg-success text-white my-4">
+            <div class="card-title">
+                <h6>
+                    What will you learn in this section
+                </h6>
+                <ul>
+                    <li> Overview of Boosting Model </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p> 
+                Boosting is another ensemble model in which weak learners are trained sequentially. Because of Sequential nature
+                training timing is slightly higher as compared to bagging models. Boosting uses a decision tree as a base model. These
+                decision trees are generally large in number (50-200) and are of very shallow depth. Shallow depth trees are likely to
+                underfit on the training data therefore these Weak learners have high bias and low variance problems. By combining these
+                weak learners boosting solves the problem of underfitting. <br>
+                There are many boosting algorithms such as AdaBoost, XGBoost etc. But we will only discuss a brief overview of AdaBoost. <br>
+                
+                Adaboost is a sequential boosting model which tries to correct errors made by previous models. Below diagram shows the
+                steps involved in the modelling process.
+
+            </p>
+            {% load static %}
+            <div class="my-4">
+                <img src={% static 'ensemble_model/boosting_overview.png' %}
+                    class="img-fluid rounded float-centre" alt="Overview of Bagging Model">
+            </div>
+            <p class="text-center"> Diagram 1: Brief Overview of Adaboost Model  </p>
+        </div>
+        <div>
+                <p>
+                    At any step t it takes the previous step (t-1) model and calculates the error of the individual samples on the training
+                    dataset. <br>
+                    
+                    Using the calculated error algorithm, assign weights to the individual sample. High error samples get the higher
+                    weights. These weights will be used to sample the data for the training the model at time step t. Since we have assigned
+                    higher weights to the samples with high error therefore sampled data will contain more samples which had higher error in
+                    the previous model. Model at step t focuses on correcting errors made by the previous model through sampling. 
+
+                  
+                </p>
+                <p>
+                    Once training of all the models is done we need to combine all the models. 
+                </p>
+                <h5> How Adaboost combines all the model to make final prediction </h5>
+                <p>
+                    For each of the models adaboost calculates the weight factor of the model using average error of the model. Below
+                    formula is used to calculate the weight factor <br>
+                    <div class="text-center" style="font-family: MathJax_Main;">
+                        \( \alpha_t = \frac{1}{2}* \log (\frac{1-\text{error}_t}{\text{error}_t}) \)
+
+                    </div>
+                    <br>
+                    Final prediction is made by calculating the weighted prediction from each model.
+                </p>
+
+        </div>
+        <div>
+            <p>
+                We have discussed only a brief overview of the adaboost algorithm. There are lots of details which have not been
+                mentioned in this discussion. For detailed working of each of the steps of the algorithm you can look at the 
+                <a href="#"> adaboost [add link]</a>
+                discussion.
+
+            </p>
+        </div>
+
+    </article>
+</div>
+{% endblock mainPage %}
+
+{% block rightSideCard %}
+<!-- right side card contains list of definitions-->
+<ul>
+    <li>
+        <a href="#">WCSS Metric</a>
+    </li>
+    <li>
+        <a href="#">Case Study</a>
+    </li>
+</ul>
+{% endblock rightSideCard %}
